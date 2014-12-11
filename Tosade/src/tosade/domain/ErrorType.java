@@ -10,5 +10,7 @@ package tosade.domain;
  * @author Jelle
  */
 public class ErrorType {
-    
+    public int id;
+    public String name;
+    public String type;
 }

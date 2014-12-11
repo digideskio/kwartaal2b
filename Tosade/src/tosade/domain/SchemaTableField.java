@@ -10,5 +10,14 @@ package tosade.domain;
  * @author Jelle
  */
 public class SchemaTableField {
-    
+    public int id;
+    public int table_id;
+    public int fields_id;
+    public String name;
+    public String type;
+    public String length;
+    public boolean primairykey;
+    public boolean foreignkey;
+    public String code;
+    public boolean autoincrement;
 }

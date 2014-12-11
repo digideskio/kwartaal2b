@@ -10,5 +10,7 @@ package tosade.domain;
  * @author Jelle
  */
 public class TaskScript {
-    
+    public int id;
+    public int task_id;
+    public String name;
 }

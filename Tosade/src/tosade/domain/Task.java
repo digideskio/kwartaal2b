@@ -5,10 +5,16 @@
  */
 package tosade.domain;
 
+import java.util.Date;
+
 /**
  *
  * @author Jelle
  */
 public class Task {
-    
+    public int id;
+    public int type_id;
+    public int schema_id;
+    public String status;
+    public Date datetime;
 }

@@ -10,5 +10,8 @@ package tosade.domain;
  * @author Jelle
  */
 public class OperatorValue {
-    
+    public int id;
+    public int rule_id;
+    public int type_id;
+    public String value;
 }

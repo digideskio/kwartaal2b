@@ -10,5 +10,8 @@ package tosade.domain;
  * @author Jelle
  */
 public class SchemaTable {
-    
+    public int id;
+    public int schema_id;
+    public String name;
+    public String code;
 }

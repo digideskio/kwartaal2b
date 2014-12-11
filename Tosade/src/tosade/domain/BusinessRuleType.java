@@ -10,5 +10,10 @@ package tosade.domain;
  * @author Jelle
  */
 public class BusinessRuleType {
-    
+    public int id;
+    public int category_id;
+    public String name;
+    public String code;
+    public String description;
+    public String example;
 }

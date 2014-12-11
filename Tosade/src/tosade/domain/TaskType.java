@@ -10,5 +10,6 @@ package tosade.domain;
  * @author Jelle
  */
 public class TaskType {
-    
+    public int id;
+    public String name;
 }

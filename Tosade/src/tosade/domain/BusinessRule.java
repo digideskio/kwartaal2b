@@ -10,5 +10,10 @@ package tosade.domain;
  * @author Jelle
  */
 public class BusinessRule {
-    
+    public int id;
+    public int type_id;
+    public int field_id;
+    public int error_id;
+    public String trigger_event;
+    public String error_message;
 }
