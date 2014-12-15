@@ -7,7 +7,11 @@ package tosade;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import tosade.domain.*;
 
 /**
@@ -15,7 +19,7 @@ import tosade.domain.*;
  * @author Jelle
  */
 public class ToolDatabase {
-    private Connection connection = null;
+    private Connection connect = null;
     
     public ToolDatabase() {
         try {
@@ -26,25 +30,39 @@ public class ToolDatabase {
             return;
         }
         try {
-            connection = DriverManager.getConnection("jdbc:oracle:thin:@yuno.jelleluteijn.nl:1521:xe", "kwartaal2b","kwartaal2b");
+            connect = DriverManager.getConnection("jdbc:oracle:thin:@yuno.jelleluteijn.nl:1521:xe", "kwartaal2b","kwartaal2b");
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
             return;
         }
+    }
+    
+    public ArrayList<Task> fetchTasks() {
+        ArrayList<Task> values = new ArrayList<Task>();
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM task where status = 'pending'");
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        if (connection != null) {
-            System.out.println("You made it, take control your database now!");
-        } else {
-            System.out.println("Failed to make connection!");
+            while (resultSet.next()) {
+                Task task = new Task();
+                task.id = resultSet.getInt("id");
+                task.type_id = resultSet.getInt("type_id");
+                task.schema_id = resultSet.getInt("schema_id");
+                task.status = resultSet.getString("status");
+                task.datetime = resultSet.getDate("datetime");
+
+                values.add(task);
+            }
+            return values;
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+            return values;
         }
     }
     
-    public Task[] FetchTasks() {
-        
-    }
-    
-    public void updateTask(Task task) {
+    /*public void updateTask(Task task) {
         
     }
     
@@ -98,5 +116,5 @@ public class ToolDatabase {
     
     public int insertSchemaTableField(SchemaTableField schemaTableField) {
         
-    }
+    }*/
 }

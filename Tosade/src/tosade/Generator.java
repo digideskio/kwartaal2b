@@ -5,6 +5,9 @@
  */
 package tosade;
 
+import java.util.ArrayList;
+import tosade.domain.Task;
+
 /**
  *
  * @author Jelle
@@ -12,7 +15,9 @@ package tosade;
 public class Generator {
     public static ToolDatabase toolDatabase;
     
-    public Generator() {
+    public static void Run() {
         toolDatabase = new ToolDatabase();
+        
+        ArrayList<Task> values = toolDatabase.fetchTasks();
     }
 }
