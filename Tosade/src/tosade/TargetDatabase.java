@@ -5,10 +5,16 @@
  */
 package tosade;
 
+import java.sql.Connection;
+
 /**
  *
  * @author Jelle
  */
-public class TargetDatabase {
+public abstract class TargetDatabase {
+    protected Connection connection = null;
+    protected String username, password, schema, host, port;
     
+    public abstract void getStructure();
+    public abstract void processStructure();
 }
