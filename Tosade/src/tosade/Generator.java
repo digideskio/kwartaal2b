@@ -10,5 +10,9 @@ package tosade;
  * @author Jelle
  */
 public class Generator {
+    public static ToolDatabase toolDatabase;
     
+    public Generator() {
+        toolDatabase = new ToolDatabase();
+    }
 }

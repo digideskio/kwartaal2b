@@ -16,6 +16,7 @@ public class Tosade {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Generator generator = new Generator();
     }
     
 }
