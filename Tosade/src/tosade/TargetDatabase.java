@@ -15,6 +15,6 @@ public abstract class TargetDatabase {
     protected Connection connection = null;
     protected String username, password, schema, host, port;
     
-    public abstract void getStructure();
+    public abstract boolean getStructure();
     public abstract void processStructure();
 }
