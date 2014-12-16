@@ -5,7 +5,7 @@
  */
 package tosade.domain;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -16,5 +16,5 @@ public class Task {
     public int type_id;
     public int schema_id;
     public String status;
-    public Date datetime;
+    public Timestamp datetime;
 }
