@@ -14,6 +14,8 @@ import java.sql.Connection;
 public abstract class Database {
     protected Connection connection = null;
     protected String username, password, schema, host, port;
+    protected TargetReader reader;
+    protected TargetWriter writer;
     
     public abstract boolean getStructure();
     public abstract void processStructure();
