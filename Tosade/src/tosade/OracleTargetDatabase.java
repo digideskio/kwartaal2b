@@ -7,11 +7,7 @@
 package tosade;
 
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -25,6 +21,8 @@ public class OracleTargetDatabase extends TargetDatabase{
         this.username = username;
         this.port = port;
         this.schema = schema;
+        this.reader = new OracleTargetReader();
+        this.writer = new OracleTargetWriter();
         
         try {
             this.connection = DriverManager.getConnection(
@@ -35,28 +33,15 @@ public class OracleTargetDatabase extends TargetDatabase{
         }
     }
     
-    
-
-    @Override
-    public boolean getStructure() {
-        String sql = "select TABLE_NAME from SYS.ALL_TABLES where owner = " + schema + " order by TABLE_NAME";
-        PreparedStatement preStatement = null;
-        ResultSet result = null;
-        try {
-            preStatement = connection.prepareStatement(sql);
-            result = preStatement.executeQuery();
-        } catch (SQLException ex) {
-            System.out.println("Getting tables from target has failed.");
-            return false;
-        }
         
-        while result.
-        
-        return true;
-    }
 
     @Override
     public void processStructure() {
+    }
+
+    @Override
+    public boolean getStructure() {
+        return reader.getStructure(connection, schema);
     }
     
 }
