@@ -23,6 +23,10 @@ public class Context {
         }
     }
     
+    public String getTemplate(String name) {
+        return platform.getTemplate(name);
+    }
+    
     public String getTemplate(String name, ArrayList<KeyValue> keyValue) {
         String template = platform.getTemplate(name);
         for (KeyValue kv : keyValue) {
