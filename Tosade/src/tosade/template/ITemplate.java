@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package tosade;
-
-import tosade.target.Writer;
+package tosade.template;
 
 /**
  *
- * @author Rory
+ * @author Jelle
  */
-public class OracleTargetWriter extends Writer {
-    public OracleTargetWriter(){
-        
-    };
+interface ITemplate {
+    
 }

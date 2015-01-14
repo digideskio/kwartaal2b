@@ -6,6 +6,7 @@
 
 package tosade;
 
+import tosade.target.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import tosade.domain.SchemaTable;
  *
  * @author Rory
  */
-public class OracleTargetReader extends TargetReader {
+public class OracleTargetReader extends Reader {
 
     public OracleTargetReader() {
     }

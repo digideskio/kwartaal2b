@@ -4,16 +4,12 @@
  * and open the template in the editor.
  */
 
-package tosade;
-
-import tosade.target.Writer;
+package tosade.target;
 
 /**
  *
  * @author Rory
  */
-public class OracleTargetWriter extends Writer {
-    public OracleTargetWriter(){
-        
-    };
+public abstract class Writer {
+    
 }

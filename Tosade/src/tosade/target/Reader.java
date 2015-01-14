@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tosade;
+
+package tosade.target;
+
+import java.sql.Connection;
 
 /**
  *
- * @author Jelle
+ * @author Rory
  */
-public class Generate {
-    
+public abstract class Reader {
+    public abstract boolean getStructure(Connection connection, String schema);
 }
