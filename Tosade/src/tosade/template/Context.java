@@ -10,5 +10,18 @@ package tosade.template;
  * @author Jelle
  */
 public class Context {
+    private ITemplate platform;
     
+    public Context(String name) {
+        try {
+            Class<?> act = Class.forName("tosade.template."+name+"Template");
+            platform = (ITemplate)act.newInstance();
+        }catch(Exception e){
+            System.out.println("Something went wrong: "+ e.getMessage());
+        }
+    }
+    
+    public String getTemplate(String name) {
+        return platform.getTemplate(name);
+    }
 }

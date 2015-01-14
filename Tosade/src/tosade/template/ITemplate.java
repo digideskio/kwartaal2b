@@ -10,5 +10,5 @@ package tosade.template;
  * @author Jelle
  */
 interface ITemplate {
-    
+    String getTemplate(String name);
 }

@@ -10,5 +10,7 @@ package tosade.template;
  * @author Jelle
  */
 public class OracleTemplate implements ITemplate {
-    
+    public String getTemplate(String name) {
+        return "";
+    }
 }
