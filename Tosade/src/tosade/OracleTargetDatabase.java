@@ -6,15 +6,19 @@
 
 package tosade;
 
-import tosade.target.Database;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import tosade.target.Database;
+import tosade.target.Reader;
+import tosade.target.Writer;
 
 /**
  *
  * @author Rory
  */
 public class OracleTargetDatabase extends Database{
+    private Reader reader;
+    private Writer writer;
 
     public OracleTargetDatabase(String username, String password, String schema, String host, String port) {
         this.host = host;
