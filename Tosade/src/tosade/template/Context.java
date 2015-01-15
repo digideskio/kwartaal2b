@@ -39,7 +39,27 @@ public class Context {
         return platform.getTableDefinition(schemaName);
     }
     
+    public String getTableDefinition(String schemaName, String key) {
+        String returnValue = "";
+        for(KeyValue keyValue : getTableDefinition(schemaName)) {
+            if(keyValue.key.equals(key)) {
+                returnValue = keyValue.value;
+            }
+        }
+        return returnValue;
+    }
+    
     public ArrayList<KeyValue> getFieldDefinition(String fieldName) {
         return platform.getFieldDefinition(fieldName);
+    }
+    
+    public String getFieldDefinition(String fieldName, String key) {
+        String returnValue = "";
+        for(KeyValue keyValue : getFieldDefinition(fieldName)) {
+            if(keyValue.key.equals(key)) {
+                returnValue = keyValue.value;
+            }
+        }
+        return returnValue;
     }
 }
