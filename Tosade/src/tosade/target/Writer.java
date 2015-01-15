@@ -11,5 +11,5 @@ package tosade.target;
  * @author Rory
  */
 public abstract class Writer {
-    
+    //hallo
 }
