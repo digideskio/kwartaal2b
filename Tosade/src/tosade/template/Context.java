@@ -34,4 +34,12 @@ public class Context {
         }
         return template;
     }
+    
+    public ArrayList<KeyValue> getTableDefinition(String schemaName) {
+        return platform.getTableDefinition(schemaName);
+    }
+    
+    public ArrayList<KeyValue> getFieldDefinition(String fieldName) {
+        return platform.getFieldDefinition(fieldName);
+    }
 }

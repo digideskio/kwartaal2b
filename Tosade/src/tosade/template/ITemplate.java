@@ -5,10 +5,14 @@
  */
 package tosade.template;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Jelle
  */
 interface ITemplate {
     String getTemplate(String name);
+    ArrayList<KeyValue> getTableDefinition(String schemaName);
+    ArrayList<KeyValue> getFieldDefinition(String fieldName);
 }

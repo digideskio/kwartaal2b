@@ -7,6 +7,7 @@ package tosade.template;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 /**
  *
@@ -31,5 +32,42 @@ public class OracleTemplate implements ITemplate {
             System.out.println("Something went wrong: "+ e.getMessage());
         }
         return template;
+    }
+    
+    public ArrayList<KeyValue> getTableDefinition(String schemaName) {
+        ArrayList<KeyValue> arrayList = new ArrayList<KeyValue>();
+        KeyValue keyValue;
+        
+        keyValue = new KeyValue();
+        keyValue.key = "name";
+        keyValue.value = "TABLE_NAME";
+        arrayList.add(keyValue);
+        return arrayList;
+    }
+    
+    public ArrayList<KeyValue> getFieldDefinition(String fieldName) {
+        ArrayList<KeyValue> arrayList = new ArrayList<KeyValue>();
+        KeyValue keyValue;
+        
+        keyValue = new KeyValue();
+        keyValue.key = "name";
+        keyValue.value = "Column";
+        arrayList.add(keyValue);
+        
+        keyValue = new KeyValue();
+        keyValue.key = "type";
+        keyValue.value = "Data Type";
+        arrayList.add(keyValue);
+        
+        keyValue = new KeyValue();
+        keyValue.key = "length";
+        keyValue.value = "Length";
+        arrayList.add(keyValue);
+        
+        keyValue = new KeyValue();
+        keyValue.key = "primarykey";
+        keyValue.value = "Primairy Key";
+        arrayList.add(keyValue);
+        return arrayList;
     }
 }
