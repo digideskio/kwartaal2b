@@ -10,25 +10,33 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import static tosade.Generator.toolDatabase;
 import tosade.domain.SchemaTable;
 import tosade.domain.SchemaTableField;
+import tosade.domain.TargetSchema;
 import tosade.target.Reader;
+import tosade.template.Context;
+import tosade.template.KeyValue;
 
 /**
  *
  * @author Rory
  */
 public class OracleTargetReader extends Reader {
-
+    Context context;
     public OracleTargetReader() {
     }
     
-    
-    
-    @Override
-    public boolean getStructure(Connection connection, String schema) {
-        String sql1 = "select TABLE_NAME from SYS.ALL_TABLES where owner = " + schema + " order by TABLE_NAME";
+    public boolean getStructure(Connection connection, String schema, TargetSchema ts) {
+        context = new Context(ts.platform);
+        ArrayList<KeyValue> kv = new ArrayList<>();
+        KeyValue k = new KeyValue();
+        k.key = "schemaName";
+        k.value = ts.name;
+        kv.add(k);
+        
+        String sql1 = context.getTemplate("fetch_tables", kv);
         PreparedStatement preStatement1 = null;
         PreparedStatement preStatement2 = null;
         ResultSet result1 = null;
@@ -50,7 +58,7 @@ public class OracleTargetReader extends Reader {
                 toolDatabase.insertSchemaTable(st);
                 
                 //ADD FIELDS OF TABLE
-                String sql2 = "DESCRIBE " + result1.getString("Table_NAME");
+                String sql2 = "DESCRIBE " + result1.getString( Context.getTableDefinition(st.name, "name") );
                 try{
                     preStatement2 = connection.prepareStatement(sql2);
                     result2 = preStatement2.executeQuery();
@@ -58,31 +66,27 @@ public class OracleTargetReader extends Reader {
                     System.out.println("Getting fields from table " + schema + result1.getString("TABLE_NAME") + " has failed.");
                     return false;
                 }
-                
                 try {
                     while( result2.next() ){
                         SchemaTableField stf = new SchemaTableField();
-                        stf.name = result2.getString("Column");
+                        stf.name = result2.getString(context.getT);
                         stf.type = result2.getString("Data Type");
                         stf.length = result2.getString("Length");
                         if(result2.getString("Primary Key").equals("1"))
                             stf.primairykey = true;
                         else
                             stf.primairykey = false;
+                        stf.table_id = Integer.parseInt( result1.getString("id") );
                     }
                 } catch (SQLException ex) {
                     System.out.println("Getting field info has failed.");
                     return false;
                 }
-                
             }
         } catch (SQLException ex) {
             System.out.println("Getting table info has failed.");
             return false;
         }
-        
-        
-        
         return true;
     }
 }
