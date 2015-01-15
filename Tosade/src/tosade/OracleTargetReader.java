@@ -69,7 +69,7 @@ public class OracleTargetReader extends Reader {
                 try {
                     while( result2.next() ){
                         SchemaTableField stf = new SchemaTableField();
-                        stf.name = result2.getString(context.getT);
+                        //stf.name = result2.getString();
                         stf.type = result2.getString("Data Type");
                         stf.length = result2.getString("Length");
                         if(result2.getString("Primary Key").equals("1"))
