@@ -254,7 +254,7 @@ public class ToolDatabase {
             while (resultSet.next()) {
                 schemaTableField = new SchemaTableField();
                 schemaTableField.id = resultSet.getInt("id");
-                schemaTableField.table_id = resultSet.getInt("schema_id");
+                schemaTableField.table_id = resultSet.getInt("table_id");
                 schemaTableField.fields_id = resultSet.getInt("fields_id");
                 schemaTableField.name = resultSet.getString("name");
                 schemaTableField.type = resultSet.getString("type");
@@ -294,7 +294,7 @@ public class ToolDatabase {
             while (resultSet.next()) {
                 SchemaTableField schemaTableField = new SchemaTableField();
                 schemaTableField.id = resultSet.getInt("id");
-                schemaTableField.table_id = resultSet.getInt("schema_id");
+                schemaTableField.table_id = resultSet.getInt("table_id");
                 schemaTableField.fields_id = resultSet.getInt("fields_id");
                 schemaTableField.name = resultSet.getString("name");
                 schemaTableField.type = resultSet.getString("type");
@@ -338,7 +338,7 @@ public class ToolDatabase {
     
     public void updateSchemaTableField(SchemaTableField schemaTableField) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE schematablefield SET schema_id = ?, fields_id = ?, name = ?, type = ?, length = ?, primairykey = ?, foreignkey = ?, code = ?, autoincrement = ? WHERE id = ?");
+            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE schematablefield SET table_id = ?, fields_id = ?, name = ?, type = ?, length = ?, primairykey = ?, foreignkey = ?, code = ?, autoincrement = ? WHERE id = ?");
             preparedStatement.setInt(1, schemaTableField.table_id);
             preparedStatement.setInt(2, schemaTableField.fields_id);
             preparedStatement.setString(3, schemaTableField.name);
@@ -370,7 +370,7 @@ public class ToolDatabase {
     
     public int insertSchemaTableField(SchemaTableField schemaTableField) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO schematablefield (schema_id, fields_id, name, type, length, primairykey, foreignkey, code, autoincrement) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO schematablefield (table_id, fields_id, name, type, length, primairykey, foreignkey, code, autoincrement) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             preparedStatement.setInt(1, schemaTableField.table_id);
             preparedStatement.setInt(2, schemaTableField.fields_id);
             preparedStatement.setString(3, schemaTableField.name);
