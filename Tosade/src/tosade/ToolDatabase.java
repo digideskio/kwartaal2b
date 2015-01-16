@@ -236,7 +236,6 @@ public class ToolDatabase {
             while (resultSet.next()) {
                 idvalue = resultSet.getInt("idvalue");
             }
-            schemaTable.id = idvalue;
             return idvalue;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -396,6 +395,372 @@ public class ToolDatabase {
             preparedStatement.executeUpdate();
             
             preparedStatement = connect.prepareStatement("SELECT seq_schematablefield_id.currval as idvalue FROM dual");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            int idvalue = 0;
+            while (resultSet.next()) {
+                idvalue = resultSet.getInt("idvalue");
+            }
+            return idvalue;
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
+    public Category fetchCategory(int id) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM category where id = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Category category = new Category();
+            while (resultSet.next()) {
+                category = new Category();
+                category.id = resultSet.getInt("id");
+                category.name = resultSet.getString("name");
+            }
+            return category;
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public ArrayList<Category> fetchCategories() {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM category");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            ArrayList<Category> values = new ArrayList<Category>();
+            while (resultSet.next()) {
+                Category category = new Category();
+                category.id = resultSet.getInt("id");
+                category.name = resultSet.getString("name");
+                values.add(category);
+            }
+            return values;
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public void deleteCategory(int id) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM category where id = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateCategory(Category category) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE category SET name = ? WHERE id = ?");
+            preparedStatement.setString(1, category.name);
+            preparedStatement.setInt(2, category.id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+        }
+    }
+    
+    public int insertCategory(Category category) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO category (name) VALUES (?)");
+            preparedStatement.setString(1, category.name);
+            preparedStatement.executeUpdate();
+            
+            preparedStatement = connect.prepareStatement("SELECT seq_category_id.currval as idvalue FROM dual");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            int idvalue = 0;
+            while (resultSet.next()) {
+                idvalue = resultSet.getInt("idvalue");
+            }
+            return idvalue;
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
+    public BusinessRuleType fetchBusinessRuleType(int id) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM businessruletype where id = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            BusinessRuleType businessRuleType = new BusinessRuleType();
+            while (resultSet.next()) {
+                businessRuleType = new BusinessRuleType();
+                businessRuleType.id = resultSet.getInt("id");
+                businessRuleType.category_id = resultSet.getInt("category_id");
+                businessRuleType.name = resultSet.getString("name");
+                businessRuleType.code = resultSet.getString("code");
+                businessRuleType.description = resultSet.getString("description");
+                businessRuleType.example = resultSet.getString("example");
+            }
+            return businessRuleType;
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public ArrayList<BusinessRuleType> fetchBusinessRuleTypes(int categoryId) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM businessruletype where category = ?");
+            preparedStatement.setInt(1, categoryId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            ArrayList<BusinessRuleType> values = new ArrayList<BusinessRuleType>();
+            while (resultSet.next()) {
+                BusinessRuleType businessRuleType = new BusinessRuleType();
+                businessRuleType.id = resultSet.getInt("id");
+                businessRuleType.category_id = resultSet.getInt("category_id");
+                businessRuleType.name = resultSet.getString("name");
+                businessRuleType.code = resultSet.getString("code");
+                businessRuleType.description = resultSet.getString("description");
+                businessRuleType.example = resultSet.getString("example");
+                values.add(businessRuleType);
+            }
+            return values;
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public void deleteBusinessRuleType(int id) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM category where id = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateBusinessRuleType(BusinessRuleType businessRuleType) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE businessruletype SET category_id = ?, name = ?, code = ?, description = ?, example = ? WHERE id = ?");
+            preparedStatement.setInt(1, businessRuleType.category_id);
+            preparedStatement.setString(2, businessRuleType.name);
+            preparedStatement.setString(3, businessRuleType.code);
+            preparedStatement.setString(4, businessRuleType.description);
+            preparedStatement.setString(5, businessRuleType.example);
+            preparedStatement.setInt(6, businessRuleType.id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+        }
+    }
+    
+    public int insertBusinessRuleType(BusinessRuleType businessRuleType) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO businessruletype (category_id, name, code, description, example) VALUES (?, ?, ?, ?, ?)");
+            preparedStatement.setInt(1, businessRuleType.category_id);
+            preparedStatement.setString(2, businessRuleType.name);
+            preparedStatement.setString(3, businessRuleType.code);
+            preparedStatement.setString(4, businessRuleType.description);
+            preparedStatement.setString(5, businessRuleType.example);
+            preparedStatement.executeUpdate();
+            
+            preparedStatement = connect.prepareStatement("SELECT seq_businessruletype_id.currval as idvalue FROM dual");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            int idvalue = 0;
+            while (resultSet.next()) {
+                idvalue = resultSet.getInt("idvalue");
+            }
+            return idvalue;
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
+    public Operator fetchOperator(int id) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM operator where id = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Operator operator = new Operator();
+            while (resultSet.next()) {
+                operator = new Operator();
+                operator.id = resultSet.getInt("id");
+                operator.type_id = resultSet.getInt("type_id");
+                operator.name = resultSet.getString("name");
+                operator.type = resultSet.getString("type");
+            }
+            return operator;
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public ArrayList<Operator> fetchOperators(int businessRuleTypeId) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM operator where type_id = ?");
+            preparedStatement.setInt(1, businessRuleTypeId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            ArrayList<Operator> values = new ArrayList<Operator>();
+            while (resultSet.next()) {
+                Operator operator = new Operator();
+                operator.id = resultSet.getInt("id");
+                operator.type_id = resultSet.getInt("type_id");
+                operator.name = resultSet.getString("name");
+                operator.type = resultSet.getString("type");
+                values.add(operator);
+            }
+            return values;
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public void deleteOperator(int id) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM operator where id = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateOperator(Operator operator) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE operator SET type_id = ?, name = ?, type = ? WHERE id = ?");
+            preparedStatement.setInt(1, operator.type_id);
+            preparedStatement.setString(2, operator.name);
+            preparedStatement.setString(3, operator.type);
+            preparedStatement.setInt(4, operator.id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+        }
+    }
+    
+    public int insertOperator(Operator operator) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO operator (type_id, name, type) VALUES (?, ?, ?)");
+            preparedStatement.setInt(1, operator.type_id);
+            preparedStatement.setString(2, operator.name);
+            preparedStatement.setString(3, operator.type);
+            preparedStatement.executeUpdate();
+            
+            preparedStatement = connect.prepareStatement("SELECT seq_operator_id.currval as idvalue FROM dual");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            int idvalue = 0;
+            while (resultSet.next()) {
+                idvalue = resultSet.getInt("idvalue");
+            }
+            return idvalue;
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
+    public ErrorType fetchErrorType(int id) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM operator where id = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            ErrorType errorType = new ErrorType();
+            while (resultSet.next()) {
+                errorType = new ErrorType();
+                errorType.id = resultSet.getInt("id");
+                errorType.name = resultSet.getString("name");
+                errorType.type = resultSet.getString("type");
+            }
+            return errorType;
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public ArrayList<ErrorType> fetchErrorTypes() {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM errortype");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            ArrayList<ErrorType> values = new ArrayList<ErrorType>();
+            while (resultSet.next()) {
+                ErrorType errorType = new ErrorType();
+                errorType.id = resultSet.getInt("id");
+                errorType.name = resultSet.getString("name");
+                errorType.type = resultSet.getString("type");
+                values.add(errorType);
+            }
+            return values;
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public void deleteErrorType(int id) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM errortype where id = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateErrorType(ErrorType errorType) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE errortype SET name = ?, type = ? WHERE id = ?");
+            preparedStatement.setString(1, errorType.name);
+            preparedStatement.setString(2, errorType.type);
+            preparedStatement.setInt(3, errorType.id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+        }
+    }
+    
+    public int insertErrorType(ErrorType errorType) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO errortype (name, type) VALUES (?, ?)");
+            preparedStatement.setString(1, errorType.name);
+            preparedStatement.setString(2, errorType.type);
+            preparedStatement.executeUpdate();
+            
+            preparedStatement = connect.prepareStatement("SELECT seq_errortype_id.currval as idvalue FROM dual");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             int idvalue = 0;
