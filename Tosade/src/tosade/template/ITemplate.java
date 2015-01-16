@@ -15,6 +15,6 @@ import tosade.domain.TargetSchema;
 interface ITemplate {
     String getTemplate(String name);
     ArrayList<KeyValue> getTableDefinition(String schemaName);
-    ArrayList<KeyValue> getFieldDefinition(String fieldName);
+    ArrayList<KeyValue> getFieldDefinition(String tableName);
     String getConnectionString(TargetSchema targetSchema);
 }

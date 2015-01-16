@@ -50,13 +50,13 @@ public class Context {
         return returnValue;
     }
     
-    public ArrayList<KeyValue> getFieldDefinition(String fieldName) {
-        return platform.getFieldDefinition(fieldName);
+    public ArrayList<KeyValue> getFieldDefinition(String tableName) {
+        return platform.getFieldDefinition(tableName);
     }
     
-    public String getFieldDefinition(String fieldName, String key) {
+    public String getFieldDefinition(String tableName, String key) {
         String returnValue = "";
-        for(KeyValue keyValue : getFieldDefinition(fieldName)) {
+        for(KeyValue keyValue : getFieldDefinition(tableName)) {
             if(keyValue.key.equals(key)) {
                 returnValue = keyValue.value;
             }

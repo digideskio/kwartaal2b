@@ -46,7 +46,7 @@ public class OracleTemplate implements ITemplate {
         return arrayList;
     }
     
-    public ArrayList<KeyValue> getFieldDefinition(String fieldName) {
+    public ArrayList<KeyValue> getFieldDefinition(String tableName) {
         ArrayList<KeyValue> arrayList = new ArrayList<KeyValue>();
         KeyValue keyValue;
         
