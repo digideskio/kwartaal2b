@@ -53,6 +53,7 @@ public class ToolDatabase {
                 task.datetime = resultSet.getTimestamp("datetime");
                 values.add(task);
             }
+            resultSet.close();
             return values;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -90,6 +91,7 @@ public class ToolDatabase {
                 taskScript.content = resultSet.getString("content");
                 values.add(taskScript);
             }
+            resultSet.close();
             return values;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -112,6 +114,7 @@ public class ToolDatabase {
             while (resultSet.next()) {
                 idvalue = resultSet.getInt("idvalue");
             }
+            resultSet.close();
             return idvalue;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -143,6 +146,7 @@ public class ToolDatabase {
                     targetSchema.overwriteschema = true;
                 }
             }
+            resultSet.close();
             return targetSchema;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -165,6 +169,7 @@ public class ToolDatabase {
                 schemaTable.name = resultSet.getString("name");
                 schemaTable.code = resultSet.getString("code");
             }
+            resultSet.close();
             return schemaTable;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -188,6 +193,7 @@ public class ToolDatabase {
                 schemaTable.code = resultSet.getString("code");
                 values.add(schemaTable);
             }
+            resultSet.close();
             return values;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -201,6 +207,7 @@ public class ToolDatabase {
             PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM schematable where id = ?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.close();
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
             e.printStackTrace();
@@ -236,6 +243,7 @@ public class ToolDatabase {
             while (resultSet.next()) {
                 idvalue = resultSet.getInt("idvalue");
             }
+            resultSet.close();
             return idvalue;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -276,6 +284,7 @@ public class ToolDatabase {
                     schemaTableField.autoincrement = true;
                 }
             }
+            resultSet.close();
             return schemaTableField;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -317,6 +326,7 @@ public class ToolDatabase {
                 }
                 values.add(schemaTableField);
             }
+            resultSet.close();
             return values;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -330,6 +340,7 @@ public class ToolDatabase {
             PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM schematablefield where id = ?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.close();
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
             e.printStackTrace();
@@ -401,6 +412,7 @@ public class ToolDatabase {
             while (resultSet.next()) {
                 idvalue = resultSet.getInt("idvalue");
             }
+            resultSet.close();
             return idvalue;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -421,6 +433,7 @@ public class ToolDatabase {
                 category.id = resultSet.getInt("id");
                 category.name = resultSet.getString("name");
             }
+            resultSet.close();
             return category;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -441,6 +454,7 @@ public class ToolDatabase {
                 category.name = resultSet.getString("name");
                 values.add(category);
             }
+            resultSet.close();
             return values;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -454,6 +468,7 @@ public class ToolDatabase {
             PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM category where id = ?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.close();
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
             e.printStackTrace();
@@ -485,6 +500,7 @@ public class ToolDatabase {
             while (resultSet.next()) {
                 idvalue = resultSet.getInt("idvalue");
             }
+            resultSet.close();
             return idvalue;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -509,6 +525,7 @@ public class ToolDatabase {
                 businessRuleType.description = resultSet.getString("description");
                 businessRuleType.example = resultSet.getString("example");
             }
+            resultSet.close();
             return businessRuleType;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -534,6 +551,7 @@ public class ToolDatabase {
                 businessRuleType.example = resultSet.getString("example");
                 values.add(businessRuleType);
             }
+            resultSet.close();
             return values;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -547,6 +565,7 @@ public class ToolDatabase {
             PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM category where id = ?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.close();
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
             e.printStackTrace();
@@ -586,6 +605,7 @@ public class ToolDatabase {
             while (resultSet.next()) {
                 idvalue = resultSet.getInt("idvalue");
             }
+            resultSet.close();
             return idvalue;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -608,6 +628,7 @@ public class ToolDatabase {
                 operator.name = resultSet.getString("name");
                 operator.type = resultSet.getString("type");
             }
+            resultSet.close();
             return operator;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -631,6 +652,7 @@ public class ToolDatabase {
                 operator.type = resultSet.getString("type");
                 values.add(operator);
             }
+            resultSet.close();
             return values;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -644,6 +666,7 @@ public class ToolDatabase {
             PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM operator where id = ?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.close();
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
             e.printStackTrace();
@@ -679,6 +702,7 @@ public class ToolDatabase {
             while (resultSet.next()) {
                 idvalue = resultSet.getInt("idvalue");
             }
+            resultSet.close();
             return idvalue;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -700,6 +724,7 @@ public class ToolDatabase {
                 errorType.name = resultSet.getString("name");
                 errorType.type = resultSet.getString("type");
             }
+            resultSet.close();
             return errorType;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -721,6 +746,7 @@ public class ToolDatabase {
                 errorType.type = resultSet.getString("type");
                 values.add(errorType);
             }
+            resultSet.close();
             return values;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -734,6 +760,7 @@ public class ToolDatabase {
             PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM errortype where id = ?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.close();
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
             e.printStackTrace();
@@ -767,6 +794,7 @@ public class ToolDatabase {
             while (resultSet.next()) {
                 idvalue = resultSet.getInt("idvalue");
             }
+            resultSet.close();
             return idvalue;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
