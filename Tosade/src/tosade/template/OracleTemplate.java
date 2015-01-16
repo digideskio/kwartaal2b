@@ -8,6 +8,7 @@ package tosade.template;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import tosade.domain.TargetSchema;
 
 /**
  *
@@ -69,5 +70,9 @@ public class OracleTemplate implements ITemplate {
         keyValue.value = "Primairy Key";
         arrayList.add(keyValue);
         return arrayList;
+    }
+    
+    public String getConnectionString(TargetSchema targetSchema) {
+        return "jdbc:oracle:thin:@" + targetSchema.hostname + ":" + targetSchema.port +":xe";
     }
 }

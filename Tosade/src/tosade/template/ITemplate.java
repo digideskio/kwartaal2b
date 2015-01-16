@@ -6,6 +6,7 @@
 package tosade.template;
 
 import java.util.ArrayList;
+import tosade.domain.TargetSchema;
 
 /**
  *
@@ -15,4 +16,5 @@ interface ITemplate {
     String getTemplate(String name);
     ArrayList<KeyValue> getTableDefinition(String schemaName);
     ArrayList<KeyValue> getFieldDefinition(String fieldName);
+    String getConnectionString(TargetSchema targetSchema);
 }

@@ -6,6 +6,7 @@
 package tosade.template;
 
 import java.util.ArrayList;
+import tosade.domain.TargetSchema;
 
 /**
  *
@@ -61,5 +62,9 @@ public class Context {
             }
         }
         return returnValue;
+    }
+    
+    public String getConnectionString(TargetSchema targetSchema) {
+        return platform.getConnectionString(targetSchema);
     }
 }
