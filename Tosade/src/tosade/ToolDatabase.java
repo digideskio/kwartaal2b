@@ -236,6 +236,7 @@ public class ToolDatabase {
             while (resultSet.next()) {
                 idvalue = resultSet.getInt("idvalue");
             }
+            schemaTable.id = idvalue;
             return idvalue;
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
