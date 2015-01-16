@@ -1,1 +1,1 @@
-select TABLE_NAME from SYS.ALL_TABLES where owner = '{{ schemaName }}' order by TABLE_NAME
+select TABLE_NAME from SYS.ALL_TABLES where owner = '{{schemaName}}' order by TABLE_NAME

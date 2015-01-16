@@ -5,6 +5,12 @@
  */
 package tosade;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import tosade.domain.TargetSchema;
+import tosade.target.Reader;
+
 /**
  *
  * @author Jelle
