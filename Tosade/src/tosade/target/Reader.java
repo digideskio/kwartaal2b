@@ -53,6 +53,7 @@ public class Reader {
             while(result1.next()){
                 SchemaTable st = new SchemaTable();
                 String tableName = result1.getString( context.getTableDefinition(ts.name, "name") );
+                result1.close();
                 st.name = tableName;
                 st.schema_id = ts.id;
                 
@@ -101,6 +102,7 @@ public class Reader {
                     return false;
                 }
                 ResultSetMetaData rsmd = result2.getMetaData();
+                result2.close();
                 for(int i=1; i<rsmd.getColumnCount(); i++){
                     SchemaTableField stf = new SchemaTableField();
                     stf.name = rsmd.getColumnName(i);
