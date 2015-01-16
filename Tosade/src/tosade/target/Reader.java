@@ -53,7 +53,6 @@ public class Reader {
             while(result1.next()){
                 SchemaTable st = new SchemaTable();
                 String tableName = result1.getString( context.getTableDefinition(ts.name, "name") );
-                result1.close();
                 st.name = tableName;
                 st.schema_id = ts.id;
                 
@@ -114,6 +113,7 @@ public class Reader {
                     Generator.toolDatabase.insertSchemaTableField(stf);
                 }
             }
+            result1.close();
         } catch (SQLException ex) {
             System.out.println("Getting table info has failed.");
             return false;
