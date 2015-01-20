@@ -50,6 +50,7 @@ public class ToolDatabase {
                 task.type_id = resultSet.getInt("type_id");
                 task.schema_id = resultSet.getInt("schema_id");
                 task.status = resultSet.getString("status");
+                task.feedback = resultSet.getString("feedback");
                 task.datetime = resultSet.getTimestamp("datetime");
                 values.add(task);
             }
@@ -64,12 +65,13 @@ public class ToolDatabase {
     
     public void updateTask(Task task) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE task SET type_id = ?, schema_id = ?, status = ?, datetime = ? WHERE id = ?");
+            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE task SET type_id = ?, schema_id = ?, status = ?, feedback = ?, datetime = ? WHERE id = ?");
             preparedStatement.setInt(1, task.type_id);
             preparedStatement.setInt(2, task.schema_id);
             preparedStatement.setString(3, task.status);
-            preparedStatement.setTimestamp(4, task.datetime);
-            preparedStatement.setInt(5, task.id);
+            preparedStatement.setString(4, task.feedback);
+            preparedStatement.setTimestamp(5, task.datetime);
+            preparedStatement.setInt(6, task.id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -132,6 +134,25 @@ public class ToolDatabase {
             System.out.println("Query Failed! Check output console");
             e.printStackTrace();
             return 0;
+        }
+    }
+    
+    public void updateTaskScript(TaskScript taskScript) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE taskscript SET task_id = ?, content = ?, is_done = ?, feedback = ? WHERE id = ?");
+            preparedStatement.setInt(1, taskScript.task_id);
+            preparedStatement.setString(2, taskScript.content);
+            if(taskScript.is_done == false) {
+                preparedStatement.setInt(3, 0);
+            }else{
+                preparedStatement.setInt(3, 1);
+            }
+            preparedStatement.setString(4, taskScript.feedback);
+            preparedStatement.setInt(5, taskScript.id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
         }
     }
     
@@ -253,7 +274,7 @@ public class ToolDatabase {
             preparedStatement.setInt(1, schemaTable.schema_id);
             preparedStatement.setString(2, schemaTable.name);
             preparedStatement.setString(3, schemaTable.code);
-            preparedStatement.setInt(5, schemaTable.id);
+            preparedStatement.setInt(4, schemaTable.id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -849,6 +870,11 @@ public class ToolDatabase {
                 businessRule.type_id = resultSet.getInt("type_id");
                 businessRule.field_id = resultSet.getInt("field_id");
                 businessRule.error_id = resultSet.getInt("error_id");
+                if(resultSet.getInt("to_generate") == 0) {
+                    businessRule.to_generate = false;
+                }else{
+                    businessRule.to_generate = true;
+                }
                 businessRule.trigger_event = resultSet.getString("trigger_event");
                 businessRule.error_message = resultSet.getString("error_message");
             }
@@ -874,6 +900,11 @@ public class ToolDatabase {
                 businessRule.type_id = resultSet.getInt("type_id");
                 businessRule.field_id = resultSet.getInt("field_id");
                 businessRule.error_id = resultSet.getInt("error_id");
+                if(resultSet.getInt("to_generate") == 0) {
+                    businessRule.to_generate = false;
+                }else{
+                    businessRule.to_generate = true;
+                }
                 businessRule.trigger_event = resultSet.getString("trigger_event");
                 businessRule.error_message = resultSet.getString("error_message");
                 values.add(businessRule);
@@ -901,13 +932,18 @@ public class ToolDatabase {
     
     public void updateBusinessRule(BusinessRule businessRule) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE operator SET type_id = ?, field_id = ?, error_id = ?, trigger_event = ?, error_message = ? WHERE id = ?");
+            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE operator SET type_id = ?, field_id = ?, error_id = ?, to_generate = ?, trigger_event = ?, error_message = ? WHERE id = ?");
             preparedStatement.setInt(1, businessRule.type_id);
             preparedStatement.setInt(2, businessRule.field_id);
             preparedStatement.setInt(3, businessRule.error_id);
-            preparedStatement.setString(4, businessRule.trigger_event);
-            preparedStatement.setString(5, businessRule.error_message);
-            preparedStatement.setInt(6, businessRule.id);
+            if(businessRule.to_generate == false) {
+                preparedStatement.setInt(4, 0);
+            }else{
+                preparedStatement.setInt(4, 1);
+            }
+            preparedStatement.setString(5, businessRule.trigger_event);
+            preparedStatement.setString(6, businessRule.error_message);
+            preparedStatement.setInt(7, businessRule.id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -917,12 +953,17 @@ public class ToolDatabase {
     
     public int insertBusinessRule(BusinessRule businessRule) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO operator (type_id, field_id, error_id, trigger_event, error_message) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO operator (type_id, field_id, error_id, to_generate, trigger_event, error_message) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setInt(1, businessRule.type_id);
             preparedStatement.setInt(2, businessRule.field_id);
             preparedStatement.setInt(3, businessRule.error_id);
-            preparedStatement.setString(4, businessRule.trigger_event);
-            preparedStatement.setString(5, businessRule.error_message);
+            if(businessRule.to_generate == false) {
+                preparedStatement.setInt(4, 0);
+            }else{
+                preparedStatement.setInt(4, 1);
+            }
+            preparedStatement.setString(5, businessRule.trigger_event);
+            preparedStatement.setString(6, businessRule.error_message);
             preparedStatement.executeUpdate();
             
             preparedStatement = connect.prepareStatement("SELECT seq_businessrule_id.currval as idvalue FROM dual");

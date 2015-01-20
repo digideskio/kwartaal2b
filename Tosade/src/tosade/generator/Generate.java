@@ -5,6 +5,7 @@
  */
 package tosade.generator;
 
+import tosade.Generator;
 import tosade.domain.*;
 
 /**
@@ -13,6 +14,6 @@ import tosade.domain.*;
  */
 public class Generate {
     public Generate(Task task) {
-        
+        TargetSchema targetSchema = Generator.toolDatabase.fetchSchema(task.schema_id);
     }
 }

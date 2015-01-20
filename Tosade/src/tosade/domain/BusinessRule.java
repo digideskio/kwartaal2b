@@ -14,6 +14,7 @@ public class BusinessRule {
     public int type_id;
     public int field_id;
     public int error_id;
+    public boolean to_generate;
     public String trigger_event;
     public String error_message;
 }

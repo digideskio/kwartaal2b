@@ -16,5 +16,6 @@ public class Task {
     public int type_id;
     public int schema_id;
     public String status;
+    public String feedback;
     public Timestamp datetime;
 }
