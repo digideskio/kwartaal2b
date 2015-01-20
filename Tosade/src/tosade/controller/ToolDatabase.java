@@ -41,7 +41,7 @@ public class ToolDatabase {
     public ArrayList<Task> fetchTasks() {
         ArrayList<Task> values = new ArrayList<Task>();
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM task where status = 'pending'");
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM task");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
