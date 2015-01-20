@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import tosade.domain.TargetSchema;
 import tosade.domain.Task;
 import tosade.target.Reader;
+import tosade.template.Context;
 
 /**
  *
@@ -19,6 +20,7 @@ import tosade.target.Reader;
  */
 public class Generator {
     public static ToolDatabase toolDatabase;
+    public static Context context;
     
     public static void Run() {
         toolDatabase = new ToolDatabase();
