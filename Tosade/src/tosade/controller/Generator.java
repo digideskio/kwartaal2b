@@ -25,13 +25,15 @@ public class Generator {
         ArrayList<Task> values = toolDatabase.fetchTasks();
         
         for(Task task : values) {
-            TargetSchema targetSchema = toolDatabase.fetchSchema(task.schema_id);
-            context = new Context(targetSchema.platform);
-            TaskType taskType = toolDatabase.fetchTaskType(task.type_id);
-            if(taskType.name.equals("generate")) {
-                Generate generate = new Generate(task);
-            }else if(taskType.name.equals("fetch") || taskType.name.equals("write")) {
-                TargetDatabase targetDatabase = new TargetDatabase(task);
+            if (task.status.equals("todo")) {
+                TargetSchema targetSchema = toolDatabase.fetchSchema(task.schema_id);
+                context = new Context(targetSchema.platform);
+                TaskType taskType = toolDatabase.fetchTaskType(task.type_id);
+                if(taskType.name.equals("generate")) {
+                    Generate generate = new Generate(task);
+                }else if(taskType.name.equals("fetch") || taskType.name.equals("write")) {
+                    TargetDatabase targetDatabase = new TargetDatabase(task);
+                }
             }
         }
     }
