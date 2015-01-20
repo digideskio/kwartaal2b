@@ -5,13 +5,10 @@
  */
 package tosade;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import tosade.domain.TargetSchema;
-import tosade.domain.Task;
-import tosade.target.Reader;
+import tosade.domain.*;
+import tosade.generator.Generate;
+import tosade.target.TargetDatabase;
 import tosade.template.Context;
 
 /**
@@ -27,28 +24,15 @@ public class Generator {
         
         ArrayList<Task> values = toolDatabase.fetchTasks();
         
-        Reader reader = null;
-        TargetSchema ts = null;
-        Connection conn = null;
-        
-        try {
-            reader = new Reader();
-            
-            ts = new TargetSchema();
-            ts.username = "test";
-            ts.password = "test";
-            ts.hostname = "yuno.jelleluteijn.nl";
-            ts.port = "1521";
-            ts.platform = "Oracle";
-            ts.name = "TEST";
-            ts.id = 43;
-            
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@yuno.jelleluteijn.nl:1521:xe", "test","test");
-        } catch (SQLException ex) {
-            System.out.println("fail");
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
+        for(Task task : values) {
+            TargetSchema targetSchema = toolDatabase.fetchSchema(task.schema_id);
+            context = new Context(targetSchema.platform);
+            TaskType taskType = toolDatabase.fetchTaskType(task.type_id);
+            if(taskType.name.equals("generate")) {
+                Generate generate = new Generate(task);
+            }else if(taskType.name.equals("fetch") || taskType.name.equals("write")) {
+                TargetDatabase targetDatabase = new TargetDatabase(task);
+            }
         }
-        System.out.println(reader.getStructure(conn, ts));
     }
 }

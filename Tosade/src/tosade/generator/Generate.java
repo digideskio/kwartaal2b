@@ -5,10 +5,14 @@
  */
 package tosade.generator;
 
+import tosade.domain.*;
+
 /**
  *
  * @author Jelle
  */
 public class Generate {
-    
+    public Generate(Task task) {
+        
+    }
 }
