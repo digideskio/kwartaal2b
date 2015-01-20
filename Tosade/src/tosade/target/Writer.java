@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import tosade.Generator;
+import tosade.controller.Generator;
 import tosade.domain.TaskScript;
 
 /**

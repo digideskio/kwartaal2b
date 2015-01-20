@@ -5,7 +5,7 @@
  */
 package tosade.generator;
 
-import tosade.Generator;
+import tosade.controller.Generator;
 import tosade.domain.*;
 
 /**
