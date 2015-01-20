@@ -52,8 +52,14 @@ public class TargetDatabase {
             ArrayList<TaskScript> scriptList = Generator.toolDatabase.fetchTaskScripts(task.id);
             
             for(TaskScript ts : scriptList){
-                if(!ts.is_done)
-                    writer.WriteScript(ts, connection);
+                if(!ts.is_done){
+                    if(writer.WriteScript(ts, connection)){
+                        task.status = "done";
+                    }else{
+                        task.status = "error";
+                    }
+                    Generator.toolDatabase.updateTask(task);
+                }
             }
         }else if(taskType.name.equals("fetch")){
             //LATER TO COME
