@@ -29,6 +29,7 @@ public class Writer {
         } catch (SQLException ex) {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
             taskScript.feedback = ex.getMessage();
+            Generator.toolDatabase.updateTaskScript(taskScript);
             return false;
         }
         taskScript.is_done = true;

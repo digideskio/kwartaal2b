@@ -37,14 +37,20 @@ public class TargetDatabase {
         schema = ts.name;
         host = ts.hostname;
         port = ts.port;
+        boolean error = false;
         
         try {
             connection = DriverManager.getConnection(Generator.context.getConnectionString(ts), username, password);
         } catch (SQLException ex) {
             Logger.getLogger(TargetDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            task.feedback = ex.getMessage();
+            task.status = "error";
+            Generator.toolDatabase.updateTask(task);
+            error = true;
         }
         
-        executeScript(task);
+        if(!error)
+            executeScript(task);
     }
     
     private void executeScript(Task task){
