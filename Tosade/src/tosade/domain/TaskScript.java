@@ -13,4 +13,6 @@ public class TaskScript {
     public int id;
     public int task_id;
     public String content;
+    public boolean is_done;
+    public String feedback;
 }

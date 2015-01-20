@@ -6,10 +6,23 @@
 
 package tosade.target;
 
+import java.sql.Connection;
+import tosade.Generator;
+import tosade.domain.TaskScript;
+import tosade.template.Context;
+
 /**
  *
  * @author Rory
  */
-public abstract class Writer {
+public class Writer {
+    Context context;
     
+    public Writer(){
+        context = Generator.context;
+    }
+    
+    public boolean WriteScript(TaskScript taskScript, Connection conn){
+        
+    }
 }
