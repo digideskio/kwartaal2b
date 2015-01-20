@@ -43,6 +43,8 @@ public class TargetDatabase {
         } catch (SQLException ex) {
             Logger.getLogger(TargetDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        executeScript(task);
     }
     
     private void executeScript(Task task){
