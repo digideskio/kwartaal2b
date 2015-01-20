@@ -135,6 +135,27 @@ public class ToolDatabase {
         }
     }
     
+    public TaskType fetchTaskType(int id) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM tasktype where id = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            TaskType taskType = new TaskType();
+            while (resultSet.next()) {
+                taskType = new TaskType();
+                taskType.id = resultSet.getInt("id");
+                taskType.name = resultSet.getString("name");
+            }
+            resultSet.close();
+            return taskType;
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     public TargetSchema fetchSchema(int id) {
         try {
             PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM targetschema where id = ?");
