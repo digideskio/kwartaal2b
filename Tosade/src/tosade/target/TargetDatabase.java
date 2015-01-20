@@ -6,19 +6,43 @@
 package tosade.target;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.ArrayList;
+import tosade.Generator;
+import tosade.domain.TargetSchema;
 import tosade.domain.Task;
+import tosade.domain.TaskScript;
 
 /**
  *
- * @author Jelle
+ * @author Rory
  */
 public class TargetDatabase {
-    protected Connection connection = null;
-    protected String username, password, schema, host, port;
-    protected Reader reader;
-    protected Writer writer;
+    private Connection connection = null;
+    private String username, password, schema, host, port;
+    private Reader reader;
+    private Writer writer;
+    
     
     public TargetDatabase(Task task){
+        TargetSchema ts = Generator.toolDatabase.fetchSchema(task.schema_id);
         
+        username = ts.username;
+        password = ts.password;
+        schema = ts.name;
+        host = ts.hostname;
+        port = ts.port;
+        
+        connection = DriverManager.getConnection(Generator.context.getConnectionString(ts), username, password);
+    }
+    
+    private void executeScript(int taskId){
+        ArrayList<TaskScript> scriptList = new ArrayList<>();
+        
+        scriptList = Generator.toolDatabase.fetchTaskScripts(taskId);
+        
+        for(TaskScript ts : scriptList){
+            if(ts.)
+        }
     }
 }
