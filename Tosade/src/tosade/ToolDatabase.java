@@ -89,6 +89,12 @@ public class ToolDatabase {
                 taskScript.id = resultSet.getInt("id");
                 taskScript.task_id = resultSet.getInt("task_id");
                 taskScript.content = resultSet.getString("content");
+                if(resultSet.getInt("is_done") == 0) {
+                    taskScript.is_done = false;
+                }else{
+                    taskScript.is_done = true;
+                }
+                taskScript.feedback = resultSet.getString("feedback");
                 values.add(taskScript);
             }
             resultSet.close();
@@ -102,9 +108,15 @@ public class ToolDatabase {
     
     public int insertTaskScript(TaskScript taskScript) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("insert into taskscript (task_id, content) values (?, ?)");
+            PreparedStatement preparedStatement = connect.prepareStatement("insert into taskscript (task_id, content, is_done, feedback) values (?, ?, ?, ?)");
             preparedStatement.setInt(1, taskScript.task_id);
             preparedStatement.setString(2, taskScript.content);
+            if(taskScript.is_done == false) {
+                preparedStatement.setInt(3, 0);
+            }else{
+                preparedStatement.setInt(3, 1);
+            }
+            preparedStatement.setString(4, taskScript.feedback);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             preparedStatement = connect.prepareStatement("SELECT seq_taskscript_id.currval as idvalue FROM dual");
