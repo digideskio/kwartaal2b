@@ -7,22 +7,32 @@
 package tosade.target;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tosade.Generator;
 import tosade.domain.TaskScript;
-import tosade.template.Context;
 
 /**
  *
  * @author Rory
  */
-public class Writer {
-    Context context;
-    
-    public Writer(){
-        context = Generator.context;
-    }
-    
+public class Writer {    
     public boolean WriteScript(TaskScript taskScript, Connection conn){
+        PreparedStatement preStatement = null;
+        String sql = taskScript.content;
         
+        try {
+            preStatement = conn.prepareStatement(sql);
+            preStatement.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
+            taskScript.feedback = ex.getMessage();
+            return false;
+        }
+        taskScript.is_done = true;
+        Generator.toolDatabase.updateTaskScript(taskScript);
+        return true;
     }
 }

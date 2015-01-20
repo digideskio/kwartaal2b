@@ -7,11 +7,16 @@ package tosade.target;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tosade.Generator;
+import static tosade.Generator.toolDatabase;
 import tosade.domain.TargetSchema;
 import tosade.domain.Task;
 import tosade.domain.TaskScript;
+import tosade.domain.TaskType;
 
 /**
  *
@@ -33,16 +38,25 @@ public class TargetDatabase {
         host = ts.hostname;
         port = ts.port;
         
-        connection = DriverManager.getConnection(Generator.context.getConnectionString(ts), username, password);
+        try {
+            connection = DriverManager.getConnection(Generator.context.getConnectionString(ts), username, password);
+        } catch (SQLException ex) {
+            Logger.getLogger(TargetDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    private void executeScript(int taskId){
-        ArrayList<TaskScript> scriptList = new ArrayList<>();
-        
-        scriptList = Generator.toolDatabase.fetchTaskScripts(taskId);
-        
-        for(TaskScript ts : scriptList){
-            if(ts.)
+    private void executeScript(Task task){
+        TaskType taskType = toolDatabase.fetchTaskType(task.type_id);
+        if(taskType.name.equals("write")) {
+            writer = new Writer();
+            ArrayList<TaskScript> scriptList = Generator.toolDatabase.fetchTaskScripts(task.id);
+            
+            for(TaskScript ts : scriptList){
+                if(!ts.is_done)
+                    writer.WriteScript(ts, connection);
+            }
+        }else if(taskType.name.equals("fetch")){
+            //LATER TO COME
         }
     }
 }
