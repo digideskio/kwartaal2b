@@ -19,6 +19,18 @@ public class Trigger {
         ArrayList<SchemaTable> schemaTables = Generator.toolDatabase.fetchSchemaTables(targetSchema.id);
         for (SchemaTable schemaTable : schemaTables) {
             
+            String trigger = "";
+            ArrayList<SchemaTableField> schemaTablesField = Generator.toolDatabase.fetchSchemaTableFields(schemaTable.id);
+            for (SchemaTableField schemaTableField : schemaTablesField) {
+                ArrayList<BusinessRule> businessRules = Generator.toolDatabase.fetchBusinessRules(schemaTableField.id);
+                for (BusinessRule businessRule : businessRules) {
+                    BusinessRuleType businessRuleType = Generator.toolDatabase.fetchBusinessRuleType(businessRule.type_id);
+                    if(businessRuleType.name.equals("")) {
+                        
+                    }
+                }
+            }
+            
             
             ArrayList<KeyValue> kvList = new ArrayList<>();
             KeyValue kv = new KeyValue();
