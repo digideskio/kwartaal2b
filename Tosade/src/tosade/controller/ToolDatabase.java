@@ -877,6 +877,21 @@ public class ToolDatabase {
                 }
                 businessRule.trigger_event = resultSet.getString("trigger_event");
                 businessRule.error_message = resultSet.getString("error_message");
+                if(resultSet.getInt("execute_insert") == 0) {
+                    businessRule.execute_insert = false;
+                }else{
+                    businessRule.execute_insert = true;
+                }
+                if(resultSet.getInt("execute_update") == 0) {
+                    businessRule.execute_update = false;
+                }else{
+                    businessRule.execute_update = true;
+                }
+                if(resultSet.getInt("execute_delete") == 0) {
+                    businessRule.execute_delete = false;
+                }else{
+                    businessRule.execute_delete = true;
+                }
             }
             resultSet.close();
             return businessRule;
@@ -907,6 +922,21 @@ public class ToolDatabase {
                 }
                 businessRule.trigger_event = resultSet.getString("trigger_event");
                 businessRule.error_message = resultSet.getString("error_message");
+                if(resultSet.getInt("execute_insert") == 0) {
+                    businessRule.execute_insert = false;
+                }else{
+                    businessRule.execute_insert = true;
+                }
+                if(resultSet.getInt("execute_update") == 0) {
+                    businessRule.execute_update = false;
+                }else{
+                    businessRule.execute_update = true;
+                }
+                if(resultSet.getInt("execute_delete") == 0) {
+                    businessRule.execute_delete = false;
+                }else{
+                    businessRule.execute_delete = true;
+                }
                 values.add(businessRule);
             }
             resultSet.close();
@@ -932,7 +962,7 @@ public class ToolDatabase {
     
     public void updateBusinessRule(BusinessRule businessRule) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE operator SET type_id = ?, field_id = ?, error_id = ?, to_generate = ?, trigger_event = ?, error_message = ? WHERE id = ?");
+            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE operator SET type_id = ?, field_id = ?, error_id = ?, to_generate = ?, trigger_event = ?, error_message = ?, execute_insert = ?, execute_update = ?, execute_delete = ? WHERE id = ?");
             preparedStatement.setInt(1, businessRule.type_id);
             preparedStatement.setInt(2, businessRule.field_id);
             preparedStatement.setInt(3, businessRule.error_id);
@@ -943,7 +973,22 @@ public class ToolDatabase {
             }
             preparedStatement.setString(5, businessRule.trigger_event);
             preparedStatement.setString(6, businessRule.error_message);
-            preparedStatement.setInt(7, businessRule.id);
+            if(businessRule.execute_insert == false) {
+                preparedStatement.setInt(7, 0);
+            }else{
+                preparedStatement.setInt(7, 1);
+            }
+            if(businessRule.execute_update == false) {
+                preparedStatement.setInt(8, 0);
+            }else{
+                preparedStatement.setInt(8, 1);
+            }
+            if(businessRule.execute_delete == false) {
+                preparedStatement.setInt(9, 0);
+            }else{
+                preparedStatement.setInt(9, 1);
+            }
+            preparedStatement.setInt(10, businessRule.id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -953,7 +998,7 @@ public class ToolDatabase {
     
     public int insertBusinessRule(BusinessRule businessRule) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO operator (type_id, field_id, error_id, to_generate, trigger_event, error_message) VALUES (?, ?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO operator (type_id, field_id, error_id, to_generate, trigger_event, error_message, execute_insert, execute_update, execute_delete) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             preparedStatement.setInt(1, businessRule.type_id);
             preparedStatement.setInt(2, businessRule.field_id);
             preparedStatement.setInt(3, businessRule.error_id);
@@ -964,6 +1009,21 @@ public class ToolDatabase {
             }
             preparedStatement.setString(5, businessRule.trigger_event);
             preparedStatement.setString(6, businessRule.error_message);
+            if(businessRule.execute_insert == false) {
+                preparedStatement.setInt(7, 0);
+            }else{
+                preparedStatement.setInt(7, 1);
+            }
+            if(businessRule.execute_update == false) {
+                preparedStatement.setInt(8, 0);
+            }else{
+                preparedStatement.setInt(8, 1);
+            }
+            if(businessRule.execute_delete == false) {
+                preparedStatement.setInt(9, 0);
+            }else{
+                preparedStatement.setInt(9, 1);
+            }
             preparedStatement.executeUpdate();
             
             preparedStatement = connect.prepareStatement("SELECT seq_businessrule_id.currval as idvalue FROM dual");
@@ -995,6 +1055,11 @@ public class ToolDatabase {
                 operatorValue.rule_id = resultSet.getInt("rule_id");
                 operatorValue.type_id = resultSet.getInt("type_id");
                 operatorValue.value = resultSet.getString("value");
+                if(resultSet.getInt("is_field") == 0) {
+                    operatorValue.is_field = false;
+                }else{
+                    operatorValue.is_field = true;
+                }
             }
             resultSet.close();
             return operatorValue;
@@ -1019,6 +1084,11 @@ public class ToolDatabase {
                 operatorValue.rule_id = resultSet.getInt("rule_id");
                 operatorValue.type_id = resultSet.getInt("type_id");
                 operatorValue.value = resultSet.getString("value");
+                if(resultSet.getInt("is_field") == 0) {
+                    operatorValue.is_field = false;
+                }else{
+                    operatorValue.is_field = true;
+                }
                 values.add(operatorValue);
             }
             resultSet.close();
@@ -1044,11 +1114,16 @@ public class ToolDatabase {
     
     public void updateOperatorValue(OperatorValue operatorValue) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE operatorvalue SET rule_id = ?, type_id = ?, value = ? WHERE id = ?");
+            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE operatorvalue SET rule_id = ?, type_id = ?, value = ?, is_field = ? WHERE id = ?");
             preparedStatement.setInt(1, operatorValue.rule_id);
             preparedStatement.setInt(2, operatorValue.type_id);
             preparedStatement.setString(3, operatorValue.value);
-            preparedStatement.setInt(4, operatorValue.id);
+            if(operatorValue.is_field == false) {
+                preparedStatement.setInt(4, 0);
+            }else{
+                preparedStatement.setInt(4, 1);
+            }
+            preparedStatement.setInt(5, operatorValue.id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -1058,10 +1133,15 @@ public class ToolDatabase {
     
     public int insertOperatorValue(OperatorValue operatorValue) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO operator (rule_id, type_id, value) VALUES (?, ?, ?)");
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO operator (rule_id, type_id, value, is_field) VALUES (?, ?, ?, ?)");
             preparedStatement.setInt(1, operatorValue.rule_id);
             preparedStatement.setInt(2, operatorValue.type_id);
             preparedStatement.setString(3, operatorValue.value);
+            if(operatorValue.is_field == false) {
+                preparedStatement.setInt(4, 0);
+            }else{
+                preparedStatement.setInt(4, 1);
+            }
             preparedStatement.executeUpdate();
             
             preparedStatement = connect.prepareStatement("SELECT seq_operatorvalue_id.currval as idvalue FROM dual");

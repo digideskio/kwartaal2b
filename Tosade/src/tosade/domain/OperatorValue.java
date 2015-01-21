@@ -14,4 +14,5 @@ public class OperatorValue {
     public int rule_id;
     public int type_id;
     public String value;
+    public boolean is_field;
 }
