@@ -8,6 +8,7 @@ package tosade.generator;
 import java.util.ArrayList;
 import tosade.controller.Generator;
 import tosade.domain.*;
+import tosade.template.KeyValue;
 
 /**
  *
@@ -15,9 +16,7 @@ import tosade.domain.*;
  */
 public class Generate {
     public Generate(Task task) {
-        ArrayList<SchemaTable> schemaTables = Generator.toolDatabase.fetchSchemaTables(task.schema_id);
-        for (SchemaTable schemaTable : schemaTables) {
-            
-        }
+        TargetSchema targetSchema = Generator.toolDatabase.fetchSchema(task.schema_id);
+        new Trigger(targetSchema);
     }
 }
