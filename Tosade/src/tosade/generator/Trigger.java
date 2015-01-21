@@ -17,28 +17,28 @@ import tosade.template.KeyValue;
 public class Trigger {
     KeyValue kv;
             
-    public Trigger(TargetSchema targetSchema) {
-        ArrayList<SchemaTable> schemaTables = Generator.toolDatabase.fetchSchemaTables(targetSchema.id);
-        for (SchemaTable schemaTable : schemaTables) {
-            
-            String trigger = "";
-            ArrayList<SchemaTableField> schemaTablesField = Generator.toolDatabase.fetchSchemaTableFields(schemaTable.id);
-            for (SchemaTableField schemaTableField : schemaTablesField) {
-                ArrayList<BusinessRule> businessRules = Generator.toolDatabase.fetchBusinessRules(schemaTableField.id);
-                for (BusinessRule businessRule : businessRules) {
-                    BusinessRuleType businessRuleType = Generator.toolDatabase.fetchBusinessRuleType(businessRule.type_id);
-                    BusinessContext context = new BusinessContext(businessRuleType.systemclass);
-                    trigger = trigger + context.getTrigger();
-                }
+    public Trigger() {
+        
+    }
+    
+    public String generateTriger(TargetSchema targetSchema, SchemaTable schemaTable) {
+        String trigger = "";
+        ArrayList<SchemaTableField> schemaTablesField = Generator.toolDatabase.fetchSchemaTableFields(schemaTable.id);
+        for (SchemaTableField schemaTableField : schemaTablesField) {
+            ArrayList<BusinessRule> businessRules = Generator.toolDatabase.fetchBusinessRules(schemaTableField.id);
+            for (BusinessRule businessRule : businessRules) {
+                BusinessRuleType businessRuleType = Generator.toolDatabase.fetchBusinessRuleType(businessRule.type_id);
+                BusinessContext context = new BusinessContext(businessRuleType.systemclass);
+                trigger = trigger + context.getTrigger();
             }
-            
-            
-            ArrayList<KeyValue> kvList = new ArrayList<>();
-            kvList.add(new KeyValue("schemaCode",targetSchema.code));
-            kvList.add(new KeyValue("tableCode",schemaTable.code));
-            kvList.add(new KeyValue("tableName",schemaTable.name));
-            kvList.add(new KeyValue("triggers",trigger));
-            String sql1 = Generator.context.getTemplate("trigger", kvList);
         }
+
+
+        ArrayList<KeyValue> kvList = new ArrayList<>();
+        kvList.add(new KeyValue("schemaCode",targetSchema.code));
+        kvList.add(new KeyValue("tableCode",schemaTable.code));
+        kvList.add(new KeyValue("tableName",schemaTable.name));
+        kvList.add(new KeyValue("triggers",trigger));
+        return Generator.context.getTemplate("trigger", kvList);
     }
 }
