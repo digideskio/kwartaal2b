@@ -1060,6 +1060,8 @@ public class ToolDatabase {
                 }else{
                     operatorValue.is_field = true;
                 }
+                operatorValue.foreignkey = resultSet.getString("foreignkey");
+                operatorValue.primairykey = resultSet.getString("primairykey");
             }
             resultSet.close();
             return operatorValue;
@@ -1089,6 +1091,8 @@ public class ToolDatabase {
                 }else{
                     operatorValue.is_field = true;
                 }
+                operatorValue.foreignkey = resultSet.getString("foreignkey");
+                operatorValue.primairykey = resultSet.getString("primairykey");
                 values.add(operatorValue);
             }
             resultSet.close();
@@ -1114,7 +1118,7 @@ public class ToolDatabase {
     
     public void updateOperatorValue(OperatorValue operatorValue) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE operatorvalue SET rule_id = ?, type_id = ?, value = ?, is_field = ? WHERE id = ?");
+            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE operatorvalue SET rule_id = ?, type_id = ?, value = ?, is_field = ?, foreignkey = ?, primairykey = ? WHERE id = ?");
             preparedStatement.setInt(1, operatorValue.rule_id);
             preparedStatement.setInt(2, operatorValue.type_id);
             preparedStatement.setString(3, operatorValue.value);
@@ -1123,7 +1127,9 @@ public class ToolDatabase {
             }else{
                 preparedStatement.setInt(4, 1);
             }
-            preparedStatement.setInt(5, operatorValue.id);
+            preparedStatement.setString(5, operatorValue.foreignkey);
+            preparedStatement.setString(6, operatorValue.primairykey);
+            preparedStatement.setInt(7, operatorValue.id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -1133,7 +1139,7 @@ public class ToolDatabase {
     
     public int insertOperatorValue(OperatorValue operatorValue) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO operator (rule_id, type_id, value, is_field) VALUES (?, ?, ?, ?)");
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO operator (rule_id, type_id, value, is_field, foreignkey, primairykey) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setInt(1, operatorValue.rule_id);
             preparedStatement.setInt(2, operatorValue.type_id);
             preparedStatement.setString(3, operatorValue.value);
@@ -1142,6 +1148,8 @@ public class ToolDatabase {
             }else{
                 preparedStatement.setInt(4, 1);
             }
+            preparedStatement.setString(5, operatorValue.foreignkey);
+            preparedStatement.setString(6, operatorValue.primairykey);
             preparedStatement.executeUpdate();
             
             preparedStatement = connect.prepareStatement("SELECT seq_operatorvalue_id.currval as idvalue FROM dual");
