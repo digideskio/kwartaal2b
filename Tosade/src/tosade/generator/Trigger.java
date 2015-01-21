@@ -27,44 +27,8 @@ public class Trigger {
                 ArrayList<BusinessRule> businessRules = Generator.toolDatabase.fetchBusinessRules(schemaTableField.id);
                 for (BusinessRule businessRule : businessRules) {
                     BusinessRuleType businessRuleType = Generator.toolDatabase.fetchBusinessRuleType(businessRule.type_id);
-                    if(businessRuleType.code.equals("ARNG")) {
-                        String triggerPassed = "";
-                        ArrayList<Operator> operators = Generator.toolDatabase.fetchOperators(businessRuleType.id);
-                        for(Operator operator : operators) {
-                            OperatorValue operatorValue = Generator.toolDatabase.fetchOperatorValue(businessRule.id, operator.id);
-                            ArrayList<KeyValue> kvListValue = new ArrayList<>();
-                            kvListValue.add(new KeyValue("fieldName",schemaTableField.name));
-                            kvListValue.add(new KeyValue("operator",operator.name));
-                            kvListValue.add(new KeyValue("operatorValue",operatorValue.value));
-                            trigger = trigger + Generator.context.getTemplate("trigger_attribute_range_passed", kvListValue);
-                        }
-                        
-                        String triggerOperator = "";
-                        boolean triggerUsed = false;
-                        if(businessRule.execute_insert) {
-                            if(!triggerUsed) {
-                                triggerOperator = triggerOperator + ",";
-                            }
-                            triggerOperator = triggerOperator + "'INS'";
-                        }
-                        if(businessRule.execute_update) {
-                            if(!triggerUsed) {
-                                triggerOperator = triggerOperator + ",";
-                            }
-                            triggerOperator = triggerOperator + "'UPD'";
-                        }
-                        if(businessRule.execute_delete) {
-                            if(!triggerUsed) {
-                                triggerOperator = triggerOperator + ",";
-                            }
-                            triggerOperator = triggerOperator + "'DEL'";
-                        }
-                        ArrayList<KeyValue> kvList = new ArrayList<>();
-                        kvList.add(new KeyValue("triggerOperator",triggerOperator));
-                        kvList.add(new KeyValue("errorMessage",businessRule.error_message));
-                        kvList.add(new KeyValue("triggerPassed",triggerPassed));
-                        trigger = trigger + Generator.context.getTemplate("trigger_attribute_range", kvList);
-                    }
+                    BusinessContext context = new BusinessContext(businessRuleType.systemclass);
+                    trigger = trigger + context.getTrigger();
                 }
             }
             

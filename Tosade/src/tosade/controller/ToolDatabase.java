@@ -578,6 +578,7 @@ public class ToolDatabase {
                 businessRuleType.code = resultSet.getString("code");
                 businessRuleType.description = resultSet.getString("description");
                 businessRuleType.example = resultSet.getString("example");
+                businessRuleType.systemclass = resultSet.getString("systemclass");
             }
             resultSet.close();
             return businessRuleType;
@@ -603,6 +604,7 @@ public class ToolDatabase {
                 businessRuleType.code = resultSet.getString("code");
                 businessRuleType.description = resultSet.getString("description");
                 businessRuleType.example = resultSet.getString("example");
+                businessRuleType.systemclass = resultSet.getString("systemclass");
                 values.add(businessRuleType);
             }
             resultSet.close();
@@ -628,13 +630,14 @@ public class ToolDatabase {
     
     public void updateBusinessRuleType(BusinessRuleType businessRuleType) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE businessruletype SET category_id = ?, name = ?, code = ?, description = ?, example = ? WHERE id = ?");
+            PreparedStatement preparedStatement = connect.prepareStatement("UPDATE businessruletype SET category_id = ?, name = ?, code = ?, description = ?, example = ?, systemclass = ? WHERE id = ?");
             preparedStatement.setInt(1, businessRuleType.category_id);
             preparedStatement.setString(2, businessRuleType.name);
             preparedStatement.setString(3, businessRuleType.code);
             preparedStatement.setString(4, businessRuleType.description);
             preparedStatement.setString(5, businessRuleType.example);
-            preparedStatement.setInt(6, businessRuleType.id);
+            preparedStatement.setString(6, businessRuleType.systemclass);
+            preparedStatement.setInt(7, businessRuleType.id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Query Failed! Check output console");
@@ -644,12 +647,13 @@ public class ToolDatabase {
     
     public int insertBusinessRuleType(BusinessRuleType businessRuleType) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO businessruletype (category_id, name, code, description, example) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO businessruletype (category_id, name, code, description, example, systemclass) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setInt(1, businessRuleType.category_id);
             preparedStatement.setString(2, businessRuleType.name);
             preparedStatement.setString(3, businessRuleType.code);
             preparedStatement.setString(4, businessRuleType.description);
             preparedStatement.setString(5, businessRuleType.example);
+            preparedStatement.setString(6, businessRuleType.systemclass);
             preparedStatement.executeUpdate();
             
             preparedStatement = connect.prepareStatement("SELECT seq_businessruletype_id.currval as idvalue FROM dual");

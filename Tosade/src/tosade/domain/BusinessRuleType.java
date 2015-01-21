@@ -16,4 +16,5 @@ public class BusinessRuleType {
     public String code;
     public String description;
     public String example;
+    public String systemclass;
 }

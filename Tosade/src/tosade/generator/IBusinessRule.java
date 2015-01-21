@@ -10,5 +10,5 @@ package tosade.generator;
  * @author Jelle
  */
 public interface IBusinessRule {
-    
+    String getTrigger();
 }

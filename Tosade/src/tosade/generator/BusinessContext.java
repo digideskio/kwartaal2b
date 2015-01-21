@@ -20,4 +20,8 @@ public class BusinessContext {
             System.out.println("Something went wrong: "+ e.getMessage());
         }
     }
+    
+    public String getTrigger() {
+        return businessRule.getTrigger();
+    }
 }
