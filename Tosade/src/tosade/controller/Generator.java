@@ -30,9 +30,9 @@ public class Generator {
                 context = new Context(targetSchema.platform);
                 TaskType taskType = toolDatabase.fetchTaskType(task.type_id);
                 if(taskType.name.equals("generate")) {
-                    Generate generate = new Generate(task);
+                    new Generate(task);
                 }else if(taskType.name.equals("fetch") || taskType.name.equals("write")) {
-                    TargetDatabase targetDatabase = new TargetDatabase(task);
+                    new TargetDatabase(task);
                 }
             }
         }
