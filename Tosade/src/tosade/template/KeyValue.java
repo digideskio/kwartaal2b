@@ -12,4 +12,13 @@ package tosade.template;
 public class KeyValue {
     public String key;
     public String value;
+    
+    public KeyValue() {
+        
+    }
+    
+    public KeyValue(String k, String v) {
+        key = k;
+        value = v;
+    }
 }

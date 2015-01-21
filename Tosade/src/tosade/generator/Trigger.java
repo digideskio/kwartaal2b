@@ -33,18 +33,9 @@ public class Trigger {
                         for(Operator operator : operators) {
                             OperatorValue operatorValue = Generator.toolDatabase.fetchOperatorValue(businessRule.id, operator.id);
                             ArrayList<KeyValue> kvListValue = new ArrayList<>();
-                            kv = new KeyValue();
-                            kv.key = "fieldName";
-                            kv.value = schemaTableField.name;
-                            kvListValue.add(kv);
-                            kv = new KeyValue();
-                            kv.key = "operator";
-                            kv.value = operator.name;
-                            kvListValue.add(kv);
-                            kv = new KeyValue();
-                            kv.key = "operatorValue";
-                            kv.value = operatorValue.value;
-                            kvListValue.add(kv);
+                            kvListValue.add(new KeyValue("fieldName",schemaTableField.name));
+                            kvListValue.add(new KeyValue("operator",operator.name));
+                            kvListValue.add(new KeyValue("operatorValue",operatorValue.value));
                             trigger = trigger + Generator.context.getTemplate("trigger_attribute_range_passed", kvListValue);
                         }
                         
@@ -69,18 +60,9 @@ public class Trigger {
                             triggerOperator = triggerOperator + "'DEL'";
                         }
                         ArrayList<KeyValue> kvList = new ArrayList<>();
-                        kv = new KeyValue();
-                        kv.key = "triggerOperator";
-                        kv.value = triggerOperator;
-                        kvList.add(kv);
-                        kv = new KeyValue();
-                        kv.key = "errorMessage";
-                        kv.value = businessRule.error_message;
-                        kvList.add(kv);
-                        kv = new KeyValue();
-                        kv.key = "triggerPassed";
-                        kv.value = triggerPassed;
-                        kvList.add(kv);
+                        kvList.add(new KeyValue("triggerOperator",triggerOperator));
+                        kvList.add(new KeyValue("errorMessage",businessRule.error_message));
+                        kvList.add(new KeyValue("triggerPassed",triggerPassed));
                         trigger = trigger + Generator.context.getTemplate("trigger_attribute_range", kvList);
                     }
                 }
@@ -88,22 +70,10 @@ public class Trigger {
             
             
             ArrayList<KeyValue> kvList = new ArrayList<>();
-            KeyValue kv = new KeyValue();
-            kv.key = "schemaCode";
-            kv.value = targetSchema.code;
-            kvList.add(kv);
-            kv = new KeyValue();
-            kv.key = "tableCode";
-            kv.value = schemaTable.code;
-            kvList.add(kv);
-            kv = new KeyValue();
-            kv.key = "tableName";
-            kv.value = schemaTable.name;
-            kvList.add(kv);
-            kv = new KeyValue();
-            kv.key = "triggers";
-            kv.value = trigger;
-            kvList.add(kv);
+            kvList.add(new KeyValue("schemaCode",targetSchema.code));
+            kvList.add(new KeyValue("tableCode",schemaTable.code));
+            kvList.add(new KeyValue("tableName",schemaTable.name));
+            kvList.add(new KeyValue("triggers",trigger));
             String sql1 = Generator.context.getTemplate("trigger", kvList);
         }
     }
