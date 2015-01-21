@@ -2,7 +2,7 @@ create or replace trigger brg_{{schemaCode}}_{{tableCode}}_trigger
 	before delete or insert or update
 	on {{tableName}}
 	for each row
-decalre
+declare
 	l_oper varchar2(3);
 	l_error_stack varchar2(4000);
 begin
