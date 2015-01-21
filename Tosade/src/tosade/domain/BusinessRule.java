@@ -17,4 +17,7 @@ public class BusinessRule {
     public boolean to_generate;
     public String trigger_event;
     public String error_message;
+    public boolean execute_insert;
+    public boolean execute_update;
+    public boolean execute_delete;
 }
