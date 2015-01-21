@@ -1072,6 +1072,37 @@ public class ToolDatabase {
         }
     }
     
+    public OperatorValue fetchOperatorValue(int BusinessRuleId, int OperatorId) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM operatorvalue where rule_id = ? and type_id = ?");
+            preparedStatement.setInt(1, BusinessRuleId);
+            preparedStatement.setInt(1, OperatorId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            OperatorValue operatorValue = new OperatorValue();
+            while (resultSet.next()) {
+                operatorValue = new OperatorValue();
+                operatorValue.id = resultSet.getInt("id");
+                operatorValue.rule_id = resultSet.getInt("rule_id");
+                operatorValue.type_id = resultSet.getInt("type_id");
+                operatorValue.value = resultSet.getString("value");
+                if(resultSet.getInt("is_field") == 0) {
+                    operatorValue.is_field = false;
+                }else{
+                    operatorValue.is_field = true;
+                }
+                operatorValue.foreignkey = resultSet.getString("foreignkey");
+                operatorValue.primairykey = resultSet.getString("primairykey");
+            }
+            resultSet.close();
+            return operatorValue;
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     public ArrayList<OperatorValue> fetchOperatorValues(int BusinessRuleId, int OperatorId) {
         try {
             PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM operatorvalue where rule_id = ? and type_id = ?");

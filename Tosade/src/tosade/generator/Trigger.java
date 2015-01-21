@@ -15,6 +15,8 @@ import tosade.template.KeyValue;
  * @author Jelle
  */
 public class Trigger {
+    KeyValue kv;
+            
     public Trigger(TargetSchema targetSchema) {
         ArrayList<SchemaTable> schemaTables = Generator.toolDatabase.fetchSchemaTables(targetSchema.id);
         for (SchemaTable schemaTable : schemaTables) {
@@ -25,8 +27,61 @@ public class Trigger {
                 ArrayList<BusinessRule> businessRules = Generator.toolDatabase.fetchBusinessRules(schemaTableField.id);
                 for (BusinessRule businessRule : businessRules) {
                     BusinessRuleType businessRuleType = Generator.toolDatabase.fetchBusinessRuleType(businessRule.type_id);
-                    if(businessRuleType.name.equals("")) {
+                    if(businessRuleType.code.equals("ARNG")) {
+                        String triggerPassed = "";
+                        ArrayList<Operator> operators = Generator.toolDatabase.fetchOperators(businessRuleType.id);
+                        for(Operator operator : operators) {
+                            OperatorValue operatorValue = Generator.toolDatabase.fetchOperatorValue(businessRule.id, operator.id);
+                            ArrayList<KeyValue> kvListValue = new ArrayList<>();
+                            kv = new KeyValue();
+                            kv.key = "fieldName";
+                            kv.value = schemaTableField.name;
+                            kvListValue.add(kv);
+                            kv = new KeyValue();
+                            kv.key = "operator";
+                            kv.value = operator.name;
+                            kvListValue.add(kv);
+                            kv = new KeyValue();
+                            kv.key = "operatorValue";
+                            kv.value = operatorValue.value;
+                            kvListValue.add(kv);
+                            trigger = trigger + Generator.context.getTemplate("trigger_attribute_range_passed", kvListValue);
+                        }
                         
+                        String triggerOperator = "";
+                        boolean triggerUsed = false;
+                        if(businessRule.execute_insert) {
+                            if(!triggerUsed) {
+                                triggerOperator = triggerOperator + ",";
+                            }
+                            triggerOperator = triggerOperator + "'INS'";
+                        }
+                        if(businessRule.execute_update) {
+                            if(!triggerUsed) {
+                                triggerOperator = triggerOperator + ",";
+                            }
+                            triggerOperator = triggerOperator + "'UPD'";
+                        }
+                        if(businessRule.execute_delete) {
+                            if(!triggerUsed) {
+                                triggerOperator = triggerOperator + ",";
+                            }
+                            triggerOperator = triggerOperator + "'DEL'";
+                        }
+                        ArrayList<KeyValue> kvList = new ArrayList<>();
+                        kv = new KeyValue();
+                        kv.key = "triggerOperator";
+                        kv.value = triggerOperator;
+                        kvList.add(kv);
+                        kv = new KeyValue();
+                        kv.key = "errorMessage";
+                        kv.value = businessRule.error_message;
+                        kvList.add(kv);
+                        kv = new KeyValue();
+                        kv.key = "triggerPassed";
+                        kv.value = triggerPassed;
+                        kvList.add(kv);
+                        trigger = trigger + Generator.context.getTemplate("trigger_attribute_range", kvList);
                     }
                 }
             }
