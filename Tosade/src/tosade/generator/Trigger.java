@@ -47,7 +47,7 @@ public class Trigger {
             kvList.add(kv);
             kv = new KeyValue();
             kv.key = "triggers";
-            kv.value = "";
+            kv.value = trigger;
             kvList.add(kv);
             String sql1 = Generator.context.getTemplate("trigger", kvList);
         }
