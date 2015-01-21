@@ -5,10 +5,12 @@
  */
 package tosade.generator;
 
+import tosade.domain.*;
+
 /**
  *
  * @author Jelle
  */
 public interface IBusinessRule {
-    String getTrigger();
+    String getTrigger(SchemaTableField schemaTableField, BusinessRule businessRule, BusinessRuleType businessRuleType);
 }

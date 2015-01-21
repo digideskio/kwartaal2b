@@ -5,6 +5,8 @@
  */
 package tosade.generator;
 
+import tosade.domain.*;
+
 /**
  *
  * @author Jelle
@@ -21,7 +23,7 @@ public class BusinessContext {
         }
     }
     
-    public String getTrigger() {
-        return businessRule.getTrigger();
+    public String getTrigger(SchemaTableField schemaTableField, BusinessRule businessRule, BusinessRuleType businessRuleType) {
+        return businessRule.getTrigger(schemaTableField, businessRule, businessRuleType);
     }
 }

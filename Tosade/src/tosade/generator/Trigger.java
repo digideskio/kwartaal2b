@@ -29,7 +29,7 @@ public class Trigger {
             for (BusinessRule businessRule : businessRules) {
                 BusinessRuleType businessRuleType = Generator.toolDatabase.fetchBusinessRuleType(businessRule.type_id);
                 BusinessContext context = new BusinessContext(businessRuleType.systemclass);
-                trigger = trigger + context.getTrigger();
+                trigger = trigger + context.getTrigger(schemaTableField, businessRule, businessRuleType);
             }
         }
 
