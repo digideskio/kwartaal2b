@@ -61,11 +61,10 @@ public class TargetDatabase {
             
             for(TaskScript ts : scriptList){
                 if(!ts.is_done){
-                    if(writer.WriteScript(ts, connection)){
+                    if(writer.WriteScript(ts, connection))
                         task.status = "done";
-                    }else{
+                    else
                         task.status = "error";
-                    }
                     Generator.toolDatabase.updateTask(task);
                 }
             }
