@@ -18,13 +18,39 @@ public class AtributeRangeRule implements IBusinessRule {
     public String getTrigger(SchemaTableField schemaTableField, BusinessRule businessRule, BusinessRuleType businessRuleType) {
         String triggerPassed = "";
         ArrayList<Operator> operators = Generator.toolDatabase.fetchOperators(businessRuleType.id);
+        ArrayList<OperatorValue> operatorValues = new ArrayList<OperatorValue>();
         for(Operator operator : operators) {
+            OperatorValue operatorValue = Generator.toolDatabase.fetchOperatorValue(businessRule.id, operator.id);
+            operatorValues.add(operatorValue);
+        }
+        if (operatorValues.size() != 2) {
+            return "";
+        }
+        int i = 0;
+        String value = "";
+        for(Operator operator : operators) {
+            i++;
             OperatorValue operatorValue = Generator.toolDatabase.fetchOperatorValue(businessRule.id, operator.id);
             ArrayList<KeyValue> kvListValue = new ArrayList<>();
             kvListValue.add(new KeyValue("fieldName",schemaTableField.name));
-            kvListValue.add(new KeyValue("operator",operator.name));
+            kvListValue.add(new KeyValue("operator",operator.type));
             kvListValue.add(new KeyValue("operatorValue",operatorValue.value));
-            kvListValue.add(new KeyValue("errorMessage",businessRule.error_message));
+            if(i == 2) {
+                if (Integer.parseInt(operatorValue.value) > Integer.parseInt(value)) {
+                    if(operator.type.equals("<") || operator.type.equals("<=")) {
+                        triggerPassed = triggerPassed + " AND ";
+                    }else{
+                        triggerPassed = triggerPassed + " OR ";
+                    }
+                }else{
+                    if(operator.type.equals(">") || operator.type.equals(">=")) {
+                        triggerPassed = triggerPassed + " AND ";
+                    }else{
+                        triggerPassed = triggerPassed + " OR ";
+                    }
+                }
+            }
+            value = operatorValue.value;
             triggerPassed = triggerPassed + Generator.context.getTemplate("trigger_attribute_range_passed", kvListValue);
         }
 
@@ -54,6 +80,7 @@ public class AtributeRangeRule implements IBusinessRule {
         ArrayList<KeyValue> kvList = new ArrayList<>();
         kvList.add(new KeyValue("triggerOperator",triggerOperator));
         kvList.add(new KeyValue("triggerPassed",triggerPassed));
+        kvList.add(new KeyValue("errorMessage",businessRule.error_message));
         return Generator.context.getTemplate("trigger_attribute_range", kvList);
     }
 }
