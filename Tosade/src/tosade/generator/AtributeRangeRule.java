@@ -31,21 +31,24 @@ public class AtributeRangeRule implements IBusinessRule {
         String triggerOperator = "";
         boolean triggerUsed = false;
         if(businessRule.execute_insert) {
-            if(!triggerUsed) {
+            if(triggerUsed) {
                 triggerOperator = triggerOperator + ",";
             }
+            triggerUsed = true;
             triggerOperator = triggerOperator + "'INS'";
         }
         if(businessRule.execute_update) {
-            if(!triggerUsed) {
+            if(triggerUsed) {
                 triggerOperator = triggerOperator + ",";
             }
+            triggerUsed = true;
             triggerOperator = triggerOperator + "'UPD'";
         }
         if(businessRule.execute_delete) {
-            if(!triggerUsed) {
+            if(triggerUsed) {
                 triggerOperator = triggerOperator + ",";
             }
+            triggerUsed = true;
             triggerOperator = triggerOperator + "'DEL'";
         }
         ArrayList<KeyValue> kvList = new ArrayList<>();
