@@ -14,9 +14,8 @@ import tosade.template.KeyValue;
  *
  * @author Rory
  */
-public class AttributeCompareRule implements IBusinessRule {
+public class AttributeListRule implements IBusinessRule {
      public String getTrigger(SchemaTableField schemaTableField, BusinessRule businessRule, BusinessRuleType businessRuleType) {
-        System.out.println("ALLOOOO");
         ArrayList<Operator> operators = Generator.toolDatabase.fetchOperators(businessRuleType.id);
         
         if(operators.size()>1)
@@ -62,7 +61,7 @@ public class AttributeCompareRule implements IBusinessRule {
         kvList.add(new KeyValue("operator",useOperators.type));
         kvList.add(new KeyValue("operatorValue",operatorValues + ""));
         kvList.add(new KeyValue("errorMessage",businessRule.error_message));
-        String rule = Generator.context.getTemplate("trigger_attribute_compare", kvList);
+        String rule = Generator.context.getTemplate("trigger_attribute_list", kvList);
         return rule;
     }
 }
