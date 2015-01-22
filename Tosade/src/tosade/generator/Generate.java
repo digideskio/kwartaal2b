@@ -29,7 +29,7 @@ public class Generate {
                 Generator.toolDatabase.insertTaskScript(taskScript);
             }
         }
-        task.status = "done";
+        //task.status = "done";
         Generator.toolDatabase.updateTask(task);
     }
 }
