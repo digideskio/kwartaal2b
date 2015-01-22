@@ -20,4 +20,8 @@ public class BusinessRule {
     public boolean execute_insert;
     public boolean execute_update;
     public boolean execute_delete;
+
+    public String getTrigger(SchemaTableField schemaTableField, BusinessRule businessRule, BusinessRuleType businessRuleType) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

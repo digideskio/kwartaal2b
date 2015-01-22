@@ -16,6 +16,7 @@ import tosade.template.KeyValue;
  */
 public class AtributeRangeRule implements IBusinessRule {
     public String getTrigger(SchemaTableField schemaTableField, BusinessRule businessRule, BusinessRuleType businessRuleType) {
+        System.out.println("test1");
         String triggerPassed = "";
         ArrayList<Operator> operators = Generator.toolDatabase.fetchOperators(businessRuleType.id);
         ArrayList<OperatorValue> operatorValues = new ArrayList<OperatorValue>();
@@ -81,6 +82,9 @@ public class AtributeRangeRule implements IBusinessRule {
         kvList.add(new KeyValue("triggerOperator",triggerOperator));
         kvList.add(new KeyValue("triggerPassed",triggerPassed));
         kvList.add(new KeyValue("errorMessage",businessRule.error_message));
-        return Generator.context.getTemplate("trigger_attribute_range", kvList);
+        String rule = Generator.context.getTemplate("trigger_attribute_range", kvList);
+        System.out.println(rule);
+        System.out.println("test2");
+        return rule;
     }
 }

@@ -12,18 +12,18 @@ import tosade.domain.*;
  * @author Jelle
  */
 public class BusinessContext {
-    private IBusinessRule businessRule;
+    private IBusinessRule businessRuleContext;
     
     public BusinessContext(String name) {
         try {
             Class<?> act = Class.forName("tosade.generator."+name+"Rule");
-            businessRule = (IBusinessRule)act.newInstance();
+            businessRuleContext = (IBusinessRule)act.newInstance();
         }catch(Exception e){
             System.out.println("Something went wrong: "+ e.getMessage());
         }
     }
     
     public String getTrigger(SchemaTableField schemaTableField, BusinessRule businessRule, BusinessRuleType businessRuleType) {
-        return businessRule.getTrigger(schemaTableField, businessRule, businessRuleType);
+        return businessRuleContext.getTrigger(schemaTableField, businessRule, businessRuleType);
     }
 }
