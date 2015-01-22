@@ -22,6 +22,7 @@ public class Trigger {
     }
     
     public String generateTriger(TargetSchema targetSchema, SchemaTable schemaTable) {
+        System.out.println("trigger");
         String trigger = "";
         ArrayList<SchemaTableField> schemaTablesFields = Generator.toolDatabase.fetchSchemaTableFields(schemaTable.id);
         for (SchemaTableField schemaTableField : schemaTablesFields) {

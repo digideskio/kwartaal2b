@@ -19,6 +19,7 @@ public class Generate {
         TargetSchema targetSchema = Generator.toolDatabase.fetchSchema(task.schema_id);
         Trigger trigger = new Trigger();
         ArrayList<SchemaTable> schemaTables = Generator.toolDatabase.fetchSchemaTables(targetSchema.id);
+        System.out.println("generate");
         for (SchemaTable schemaTable : schemaTables) {
             String code = trigger.generateTriger(targetSchema, schemaTable);
             TaskScript taskScript = new TaskScript();
