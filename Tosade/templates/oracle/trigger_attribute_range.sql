@@ -2,7 +2,7 @@
 declare
 	l_passed boolean := true;
 begin
-	if l_oper({{triggerOperator}})
+	if l_oper in ({{triggerOperator}})
 	then
 		l_passed := {{triggerPassed}};
 		if not l_passed

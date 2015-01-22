@@ -26,7 +26,6 @@ public class Generator {
         
         for(Task task : values) {
             if (task.status.equals("todo")) {
-                System.out.println("task 1");
                 TargetSchema targetSchema = toolDatabase.fetchSchema(task.schema_id);
                 context = new Context(targetSchema.platform);
                 TaskType taskType = toolDatabase.fetchTaskType(task.type_id);
@@ -35,7 +34,6 @@ public class Generator {
                 }else if(taskType.name.equals("fetch") || taskType.name.equals("write")) {
                     new TargetDatabase(task);
                 }
-                System.out.println("task 2");
             }
         }
     }

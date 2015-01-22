@@ -22,10 +22,9 @@ public class Trigger {
     }
     
     public String generateTriger(TargetSchema targetSchema, SchemaTable schemaTable) {
-                System.out.println("trigger 1");
         String trigger = "";
-        ArrayList<SchemaTableField> schemaTablesField = Generator.toolDatabase.fetchSchemaTableFields(schemaTable.id);
-        for (SchemaTableField schemaTableField : schemaTablesField) {
+        ArrayList<SchemaTableField> schemaTablesFields = Generator.toolDatabase.fetchSchemaTableFields(schemaTable.id);
+        for (SchemaTableField schemaTableField : schemaTablesFields) {
             ArrayList<BusinessRule> businessRules = Generator.toolDatabase.fetchBusinessRules(schemaTableField.id);
             for (BusinessRule businessRule : businessRules) {
                 if(businessRule.to_generate) {
@@ -36,13 +35,16 @@ public class Trigger {
             }
         }
 
-
+        
         ArrayList<KeyValue> kvList = new ArrayList<>();
         kvList.add(new KeyValue("schemaCode",targetSchema.code));
         kvList.add(new KeyValue("tableCode",schemaTable.code));
         kvList.add(new KeyValue("tableName",schemaTable.name));
         kvList.add(new KeyValue("triggers",trigger));
-                System.out.println("trigger 2");
-        return Generator.context.getTemplate("trigger", kvList);
+        if(trigger == "") {
+            return "";
+        }else{
+            return Generator.context.getTemplate("trigger", kvList);
+        }
     }
 }

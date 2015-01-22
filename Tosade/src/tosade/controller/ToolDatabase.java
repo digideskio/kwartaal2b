@@ -1080,7 +1080,7 @@ public class ToolDatabase {
         try {
             PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM operatorvalue where rule_id = ? and type_id = ?");
             preparedStatement.setInt(1, BusinessRuleId);
-            preparedStatement.setInt(1, OperatorId);
+            preparedStatement.setInt(2, OperatorId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             OperatorValue operatorValue = new OperatorValue();
@@ -1111,7 +1111,7 @@ public class ToolDatabase {
         try {
             PreparedStatement preparedStatement = connect.prepareStatement("SELECT * FROM operatorvalue where rule_id = ? and type_id = ?");
             preparedStatement.setInt(1, BusinessRuleId);
-            preparedStatement.setInt(1, OperatorId);
+            preparedStatement.setInt(2, OperatorId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             ArrayList<OperatorValue> values = new ArrayList<OperatorValue>();
