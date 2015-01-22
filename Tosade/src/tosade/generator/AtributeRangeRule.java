@@ -16,7 +16,6 @@ import tosade.template.KeyValue;
  */
 public class AtributeRangeRule implements IBusinessRule {
     public String getTrigger(SchemaTableField schemaTableField, BusinessRule businessRule, BusinessRuleType businessRuleType) {
-        String trigger = "";
         String triggerPassed = "";
         ArrayList<Operator> operators = Generator.toolDatabase.fetchOperators(businessRuleType.id);
         for(Operator operator : operators) {
