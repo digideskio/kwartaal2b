@@ -16,6 +16,7 @@ import tosade.template.KeyValue;
  */
 public class Generate {
     public Generate(Task task) {
+                System.out.println("generate 1");
         TargetSchema targetSchema = Generator.toolDatabase.fetchSchema(task.schema_id);
         Trigger trigger = new Trigger();
         ArrayList<SchemaTable> schemaTables = Generator.toolDatabase.fetchSchemaTables(targetSchema.id);
@@ -26,5 +27,6 @@ public class Generate {
             taskScript.content = code;
             Generator.toolDatabase.insertTaskScript(taskScript);
         }
+                System.out.println("generate 2");
     }
 }

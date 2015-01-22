@@ -22,14 +22,17 @@ public class Trigger {
     }
     
     public String generateTriger(TargetSchema targetSchema, SchemaTable schemaTable) {
+                System.out.println("trigger 1");
         String trigger = "";
         ArrayList<SchemaTableField> schemaTablesField = Generator.toolDatabase.fetchSchemaTableFields(schemaTable.id);
         for (SchemaTableField schemaTableField : schemaTablesField) {
             ArrayList<BusinessRule> businessRules = Generator.toolDatabase.fetchBusinessRules(schemaTableField.id);
             for (BusinessRule businessRule : businessRules) {
-                BusinessRuleType businessRuleType = Generator.toolDatabase.fetchBusinessRuleType(businessRule.type_id);
-                BusinessContext context = new BusinessContext(businessRuleType.systemclass);
-                trigger = trigger + context.getTrigger(schemaTableField, businessRule, businessRuleType);
+                if(businessRule.to_generate) {
+                    BusinessRuleType businessRuleType = Generator.toolDatabase.fetchBusinessRuleType(businessRule.type_id);
+                    BusinessContext context = new BusinessContext(businessRuleType.systemclass);
+                    trigger = trigger + context.getTrigger(schemaTableField, businessRule, businessRuleType);
+                }
             }
         }
 
@@ -39,6 +42,7 @@ public class Trigger {
         kvList.add(new KeyValue("tableCode",schemaTable.code));
         kvList.add(new KeyValue("tableName",schemaTable.name));
         kvList.add(new KeyValue("triggers",trigger));
+                System.out.println("trigger 2");
         return Generator.context.getTemplate("trigger", kvList);
     }
 }
