@@ -25,7 +25,8 @@ public class AtributeRangeRule implements IBusinessRule {
             kvListValue.add(new KeyValue("fieldName",schemaTableField.name));
             kvListValue.add(new KeyValue("operator",operator.name));
             kvListValue.add(new KeyValue("operatorValue",operatorValue.value));
-            trigger = trigger + Generator.context.getTemplate("trigger_attribute_range_passed", kvListValue);
+            kvListValue.add(new KeyValue("errorMessage",businessRule.error_message));
+            triggerPassed = triggerPassed + Generator.context.getTemplate("trigger_attribute_range_passed", kvListValue);
         }
 
         String triggerOperator = "";
@@ -50,7 +51,6 @@ public class AtributeRangeRule implements IBusinessRule {
         }
         ArrayList<KeyValue> kvList = new ArrayList<>();
         kvList.add(new KeyValue("triggerOperator",triggerOperator));
-        kvList.add(new KeyValue("errorMessage",businessRule.error_message));
         kvList.add(new KeyValue("triggerPassed",triggerPassed));
         return Generator.context.getTemplate("trigger_attribute_range", kvList);
     }
