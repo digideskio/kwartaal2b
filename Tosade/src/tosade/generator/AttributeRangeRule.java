@@ -32,6 +32,7 @@ public class AttributeRangeRule implements IBusinessRule {
         }
         int i = 0;
         String value = "";
+        
         for(Operator operator : useOperators) {
             i++;
             OperatorValue operatorValue = Generator.toolDatabase.fetchOperatorValue(businessRule.id, operator.id);

@@ -12,47 +12,24 @@ import tosade.template.KeyValue;
 
 /**
  *
- * @author Jelle
+ * @author Rory
  */
 public class AttributeCompareRule implements IBusinessRule {
-    public String getTrigger(SchemaTableField schemaTableField, BusinessRule businessRule, BusinessRuleType businessRuleType) {
-        System.out.println("test1");
-        String triggerPassed = "";
+     public String getTrigger(SchemaTableField schemaTableField, BusinessRule businessRule, BusinessRuleType businessRuleType) {
+         System.out.println("ALLOOOO");
         ArrayList<Operator> operators = Generator.toolDatabase.fetchOperators(businessRuleType.id);
-        ArrayList<OperatorValue> operatorValues = new ArrayList<OperatorValue>();
-        for(Operator operator : operators) {
-            OperatorValue operatorValue = Generator.toolDatabase.fetchOperatorValue(businessRule.id, operator.id);
-            operatorValues.add(operatorValue);
-        }
-        if (operatorValues.size() != 2) {
+        
+        if(operators.size()>1)
             return "";
-        }
-        int i = 0;
-        String value = "";
+        
+        OperatorValue operatorValues = null;
+        Operator useOperators = null;
         for(Operator operator : operators) {
-            i++;
-            OperatorValue operatorValue = Generator.toolDatabase.fetchOperatorValue(businessRule.id, operator.id);
-            ArrayList<KeyValue> kvListValue = new ArrayList<>();
-            kvListValue.add(new KeyValue("fieldName",schemaTableField.name));
-            kvListValue.add(new KeyValue("operator",operator.type));
-            kvListValue.add(new KeyValue("operatorValue",operatorValue.value));
-            if(i == 2) {
-                if (Integer.parseInt(operatorValue.value) > Integer.parseInt(value)) {
-                    if(operator.type.equals("<") || operator.type.equals("<=")) {
-                        triggerPassed = triggerPassed + " AND ";
-                    }else{
-                        triggerPassed = triggerPassed + " OR ";
-                    }
-                }else{
-                    if(operator.type.equals(">") || operator.type.equals(">=")) {
-                        triggerPassed = triggerPassed + " AND ";
-                    }else{
-                        triggerPassed = triggerPassed + " OR ";
-                    }
-                }
+            ArrayList<OperatorValue> operatorValue = Generator.toolDatabase.fetchOperatorValues(businessRule.id, operator.id);
+            for(OperatorValue operatorvalue : operatorValue) {
+                operatorValues = operatorvalue;
+                useOperators = operator;
             }
-            value = operatorValue.value;
-            triggerPassed = triggerPassed + Generator.context.getTemplate("trigger_attribute_range_passed", kvListValue);
         }
 
         String triggerOperator = "";
@@ -78,13 +55,14 @@ public class AttributeCompareRule implements IBusinessRule {
             triggerUsed = true;
             triggerOperator = triggerOperator + "'DEL'";
         }
+        
         ArrayList<KeyValue> kvList = new ArrayList<>();
         kvList.add(new KeyValue("triggerOperator",triggerOperator));
-        kvList.add(new KeyValue("triggerPassed",triggerPassed));
+        kvList.add(new KeyValue("fieldName",schemaTableField.name));
+        kvList.add(new KeyValue("operator",useOperators.type));
+        kvList.add(new KeyValue("operatorValue",operatorValues + ""));
         kvList.add(new KeyValue("errorMessage",businessRule.error_message));
-        String rule = Generator.context.getTemplate("trigger_attribute_range", kvList);
-        System.out.println(rule);
-        System.out.println("test2");
+        String rule = Generator.context.getTemplate("trigger_attribute_compare", kvList);
         return rule;
     }
 }
