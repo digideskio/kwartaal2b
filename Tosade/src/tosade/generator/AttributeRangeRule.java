@@ -17,11 +17,11 @@ import tosade.template.KeyValue;
 public class AttributeRangeRule implements IBusinessRule {
     public String getTrigger(SchemaTableField schemaTableField, BusinessRule businessRule, BusinessRuleType businessRuleType) {
         String triggerPassed = "";
-        ArrayList<Operator> operators = Generator.toolDatabase.fetchOperators(businessRuleType.id);
+        ArrayList<Operator> operators = ToolDatabase.getInstance().fetchOperators(businessRuleType.id);
         ArrayList<OperatorValue> operatorValues = new ArrayList<OperatorValue>();
         ArrayList<Operator> useOperators = new ArrayList<Operator>();
         for(Operator operator : operators) {
-            ArrayList<OperatorValue> operatorValue = Generator.toolDatabase.fetchOperatorValues(businessRule.id, operator.id);
+            ArrayList<OperatorValue> operatorValue = ToolDatabase.getInstance().fetchOperatorValues(businessRule.id, operator.id);
             for(OperatorValue operatorvalue : operatorValue) {
                 operatorValues.add(operatorvalue);
                 useOperators.add(operator);
@@ -35,7 +35,7 @@ public class AttributeRangeRule implements IBusinessRule {
         
         for(Operator operator : useOperators) {
             i++;
-            OperatorValue operatorValue = Generator.toolDatabase.fetchOperatorValue(businessRule.id, operator.id);
+            OperatorValue operatorValue = ToolDatabase.getInstance().fetchOperatorValue(businessRule.id, operator.id);
             ArrayList<KeyValue> kvListValue = new ArrayList<>();
             kvListValue.add(new KeyValue("fieldName",schemaTableField.name));
             kvListValue.add(new KeyValue("operator",operator.type));

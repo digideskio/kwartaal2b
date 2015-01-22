@@ -11,8 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import tosade.controller.Generator;
 import tosade.domain.TaskScript;
+import tosade.domain.ToolDatabase;
 
 /**
  *
@@ -29,11 +29,11 @@ public class Writer {
         } catch (SQLException ex) {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
             taskScript.feedback = ex.getMessage();
-            Generator.toolDatabase.updateTaskScript(taskScript);
+            ToolDatabase.getInstance().updateTaskScript(taskScript);
             return false;
         }
         taskScript.is_done = true;
-        Generator.toolDatabase.updateTaskScript(taskScript);
+        ToolDatabase.getInstance().updateTaskScript(taskScript);
         return true;
     }
 }

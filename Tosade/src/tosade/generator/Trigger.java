@@ -23,12 +23,12 @@ public class Trigger {
     
     public String generateTriger(TargetSchema targetSchema, SchemaTable schemaTable) {
         String trigger = "";
-        ArrayList<SchemaTableField> schemaTablesFields = Generator.toolDatabase.fetchSchemaTableFields(schemaTable.id);
+        ArrayList<SchemaTableField> schemaTablesFields = ToolDatabase.getInstance().fetchSchemaTableFields(schemaTable.id);
         for (SchemaTableField schemaTableField : schemaTablesFields) {
-            ArrayList<BusinessRule> businessRules = Generator.toolDatabase.fetchBusinessRules(schemaTableField.id);
+            ArrayList<BusinessRule> businessRules = ToolDatabase.getInstance().fetchBusinessRules(schemaTableField.id);
             for (BusinessRule businessRule : businessRules) {
                 if(businessRule.to_generate) {
-                    BusinessRuleType businessRuleType = Generator.toolDatabase.fetchBusinessRuleType(businessRule.type_id);
+                    BusinessRuleType businessRuleType = ToolDatabase.getInstance().fetchBusinessRuleType(businessRule.type_id);
                     BusinessContext context = new BusinessContext(businessRuleType.systemclass);
                     trigger = trigger + context.getTrigger(schemaTableField, businessRule, businessRuleType);
                 }

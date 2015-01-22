@@ -16,12 +16,12 @@ import tosade.template.KeyValue;
  */
 public class AttributeCompareRule implements IBusinessRule {
     public String getTrigger(SchemaTableField schemaTableField, BusinessRule businessRule, BusinessRuleType businessRuleType) {
-        ArrayList<Operator> operators = Generator.toolDatabase.fetchOperators(businessRuleType.id);
+        ArrayList<Operator> operators = ToolDatabase.getInstance().fetchOperators(businessRuleType.id);
         
         OperatorValue operatorValues = null;
         Operator useOperators = null;
         for(Operator operator : operators) {
-            ArrayList<OperatorValue> operatorValue = Generator.toolDatabase.fetchOperatorValues(businessRule.id, operator.id);
+            ArrayList<OperatorValue> operatorValue = ToolDatabase.getInstance().fetchOperatorValues(businessRule.id, operator.id);
             for(OperatorValue operatorvalue : operatorValue) {
                 operatorValues = operatorvalue;
                 useOperators = operator;

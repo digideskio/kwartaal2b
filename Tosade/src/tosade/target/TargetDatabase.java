@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tosade.controller.Generator;
-import static tosade.controller.Generator.toolDatabase;
 import tosade.domain.TargetSchema;
 import tosade.domain.Task;
 import tosade.domain.TaskScript;
 import tosade.domain.TaskType;
+import tosade.domain.ToolDatabase;
 
 /**
  *
@@ -30,7 +30,7 @@ public class TargetDatabase {
     
     
     public TargetDatabase(Task task){
-        TargetSchema ts = Generator.toolDatabase.fetchSchema(task.schema_id);
+        TargetSchema ts = ToolDatabase.getInstance().fetchSchema(task.schema_id);
         
         username = ts.username;
         password = ts.password;
@@ -45,7 +45,7 @@ public class TargetDatabase {
             Logger.getLogger(TargetDatabase.class.getName()).log(Level.SEVERE, null, ex);
             task.feedback = ex.getMessage();
             task.status = "error";
-            Generator.toolDatabase.updateTask(task);
+            ToolDatabase.getInstance().updateTask(task);
             error = true;
         }
         
@@ -54,10 +54,10 @@ public class TargetDatabase {
     }
     
     private void executeScript(Task task){
-        TaskType taskType = toolDatabase.fetchTaskType(task.type_id);
+        TaskType taskType = ToolDatabase.getInstance().fetchTaskType(task.type_id);
         if(taskType.name.equals("write")) {
             writer = new Writer();
-            ArrayList<TaskScript> scriptList = Generator.toolDatabase.fetchTaskScripts(task.id);
+            ArrayList<TaskScript> scriptList = ToolDatabase.getInstance().fetchTaskScripts(task.id);
             
             for(TaskScript ts : scriptList){
                 if(!ts.is_done){
@@ -65,7 +65,7 @@ public class TargetDatabase {
                         task.status = "done";
                     else
                         task.status = "error";
-                    Generator.toolDatabase.updateTask(task);
+                    ToolDatabase.getInstance().updateTask(task);
                 }
             }
         }else if(taskType.name.equals("fetch")){

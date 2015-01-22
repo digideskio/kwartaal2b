@@ -16,9 +16,9 @@ import tosade.template.KeyValue;
  */
 public class Generate {
     public Generate(Task task) {
-        TargetSchema targetSchema = Generator.toolDatabase.fetchSchema(task.schema_id);
+        TargetSchema targetSchema = ToolDatabase.getInstance().fetchSchema(task.schema_id);
         Trigger trigger = new Trigger();
-        ArrayList<SchemaTable> schemaTables = Generator.toolDatabase.fetchSchemaTables(targetSchema.id);
+        ArrayList<SchemaTable> schemaTables = ToolDatabase.getInstance().fetchSchemaTables(targetSchema.id);
         for (SchemaTable schemaTable : schemaTables) {
             String code = trigger.generateTriger(targetSchema, schemaTable);
             TaskScript taskScript = new TaskScript();
@@ -26,10 +26,10 @@ public class Generate {
             taskScript.content = code;
             if(code != "") {
                 System.out.println(code);
-                Generator.toolDatabase.insertTaskScript(taskScript);
+                ToolDatabase.getInstance().insertTaskScript(taskScript);
             }
         }
         //task.status = "done";
-        Generator.toolDatabase.updateTask(task);
+        ToolDatabase.getInstance().updateTask(task);
     }
 }

@@ -12,11 +12,10 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import tosade.controller.Generator;
-import static tosade.controller.Generator.toolDatabase;
 import tosade.domain.SchemaTable;
 import tosade.domain.SchemaTableField;
 import tosade.domain.TargetSchema;
+import tosade.domain.ToolDatabase;
 import tosade.template.Context;
 import tosade.template.KeyValue;
 
@@ -57,7 +56,7 @@ public class Reader {
                 st.schema_id = ts.id;
                 
                 System.out.println(st.name + " EEN TABLE");
-                st.id = toolDatabase.insertSchemaTable(st);
+                st.id = ToolDatabase.getInstance().insertSchemaTable(st);
                 
                 //ADD FIELDS OF TABLE
 //                kv = new KeyValue();
@@ -110,7 +109,7 @@ public class Reader {
                     stf.table_id = st.id;
                     
                     System.out.println(stf.name + " EEN VELD");
-                    Generator.toolDatabase.insertSchemaTableField(stf);
+                    ToolDatabase.getInstance().insertSchemaTableField(stf);
                 }
             }
             result1.close();
