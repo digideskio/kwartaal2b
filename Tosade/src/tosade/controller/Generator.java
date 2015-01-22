@@ -17,7 +17,6 @@ import tosade.template.Context;
  * @author Jelle
  */
 public class Generator {
-    public static Context context;
     
     public static void Run() {
         
@@ -26,7 +25,7 @@ public class Generator {
         for(Task task : values) {
             if (task.status.equals("todo")) {
                 TargetSchema targetSchema = ToolDatabase.getInstance().fetchSchema(task.schema_id);
-                context = new Context(targetSchema.platform);
+                Context.setContext(targetSchema.platform);
                 TaskType taskType = ToolDatabase.getInstance().fetchTaskType(task.type_id);
                 if(taskType.name.equals("generate")) {
                     new Generate(task);

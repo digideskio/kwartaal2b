@@ -6,9 +6,7 @@
 package tosade.generator;
 
 import java.util.ArrayList;
-import tosade.controller.Generator;
 import tosade.domain.*;
-import tosade.template.KeyValue;
 
 /**
  *

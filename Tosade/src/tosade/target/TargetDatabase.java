@@ -11,12 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import tosade.controller.Generator;
 import tosade.domain.TargetSchema;
 import tosade.domain.Task;
 import tosade.domain.TaskScript;
 import tosade.domain.TaskType;
 import tosade.domain.ToolDatabase;
+import tosade.template.Context;
 
 /**
  *
@@ -40,7 +40,7 @@ public class TargetDatabase {
         boolean error = false;
         
         try {
-            connection = DriverManager.getConnection(Generator.context.getConnectionString(ts), username, password);
+            connection = DriverManager.getConnection(Context.getInstance().getConnectionString(ts), username, password);
         } catch (SQLException ex) {
             Logger.getLogger(TargetDatabase.class.getName()).log(Level.SEVERE, null, ex);
             task.feedback = ex.getMessage();

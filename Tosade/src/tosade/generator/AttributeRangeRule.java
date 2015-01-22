@@ -6,8 +6,8 @@
 package tosade.generator;
 
 import java.util.ArrayList;
-import tosade.controller.Generator;
 import tosade.domain.*;
+import tosade.template.Context;
 import tosade.template.KeyValue;
 
 /**
@@ -56,7 +56,7 @@ public class AttributeRangeRule implements IBusinessRule {
                 }
             }
             value = operatorValue.value;
-            triggerPassed = triggerPassed + Generator.context.getTemplate("trigger_attribute_range_passed", kvListValue);
+            triggerPassed = triggerPassed + Context.getInstance().getTemplate("trigger_attribute_range_passed", kvListValue);
         }
 
         String triggerOperator = "";
@@ -86,7 +86,7 @@ public class AttributeRangeRule implements IBusinessRule {
         kvList.add(new KeyValue("triggerOperator",triggerOperator));
         kvList.add(new KeyValue("triggerPassed",triggerPassed));
         kvList.add(new KeyValue("errorMessage",businessRule.error_message));
-        String rule = Generator.context.getTemplate("trigger_attribute_range", kvList);
+        String rule = Context.getInstance().getTemplate("trigger_attribute_range", kvList);
         return rule;
     }
 }

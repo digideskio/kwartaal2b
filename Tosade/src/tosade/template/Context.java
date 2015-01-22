@@ -14,8 +14,17 @@ import tosade.domain.TargetSchema;
  */
 public class Context {
     private ITemplate platform;
+    protected static Context instance;
     
-    public Context(String name) {
+    public static Context getInstance(){
+        return instance;
+    }
+    
+    public static void setContext(String name){
+        instance = new Context(name);
+    }
+    
+    protected Context(String name) {
         try {
             Class<?> act = Class.forName("tosade.template."+name+"Template");
             platform = (ITemplate)act.newInstance();

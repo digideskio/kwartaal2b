@@ -31,7 +31,7 @@ public class Reader {
     ResultSet result2 = null;
     
     public boolean getStructure(Connection connection, TargetSchema ts){
-        context = new Context(ts.platform);
+        context = Context.getInstance();
         
         ArrayList<KeyValue> kvList = new ArrayList<>();
         KeyValue kv = new KeyValue();

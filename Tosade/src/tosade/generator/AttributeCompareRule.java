@@ -6,8 +6,8 @@
 package tosade.generator;
 
 import java.util.ArrayList;
-import tosade.controller.Generator;
 import tosade.domain.*;
+import tosade.template.Context;
 import tosade.template.KeyValue;
 
 /**
@@ -58,7 +58,7 @@ public class AttributeCompareRule implements IBusinessRule {
         kvList.add(new KeyValue("operator",useOperators.type));
         kvList.add(new KeyValue("operatorValue",operatorValues.value + ""));
         kvList.add(new KeyValue("errorMessage",businessRule.error_message));
-        String rule = Generator.context.getTemplate("trigger_attribute_compare", kvList);
+        String rule = Context.getInstance().getTemplate("trigger_attribute_compare", kvList);
         return rule;
     }
 }

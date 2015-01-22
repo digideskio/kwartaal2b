@@ -6,8 +6,8 @@
 package tosade.generator;
 
 import java.util.ArrayList;
-import tosade.controller.Generator;
 import tosade.domain.*;
+import tosade.template.Context;
 import tosade.template.KeyValue;
 
 /**
@@ -44,7 +44,7 @@ public class Trigger {
         if(trigger == "") {
             return "";
         }else{
-            return Generator.context.getTemplate("trigger", kvList);
+            return Context.getInstance().getTemplate("trigger", kvList);
         }
     }
 }
