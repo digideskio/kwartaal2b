@@ -57,10 +57,10 @@ public class AttributeCompareRule implements IBusinessRule {
             ArrayList<KeyValue> kvListValue = new ArrayList<>();
             int fieldId = Integer.parseInt(operatorValues.value);
             SchemaTableField attributeSchemaTableField = ToolDatabase.getInstance().fetchSchemaTableField(fieldId);
+            kvListValue.add(new KeyValue("fieldName",attributeSchemaTableField.name));
             if(attributeSchemaTableField.table_id == schemaTableField.table_id) {
                 //het andere veld zit in de zelfde tabel
                 //tuple compare rule
-                kvListValue.add(new KeyValue("fieldName",attributeSchemaTableField.name));
                 value = Context.getInstance().getTemplate("trigger_attribute_compare_tuple", kvListValue);
             }else{
                 //het andere veld zit in een andere tabel
