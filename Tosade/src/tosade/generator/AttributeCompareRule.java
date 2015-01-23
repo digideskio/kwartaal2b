@@ -54,15 +54,19 @@ public class AttributeCompareRule implements IBusinessRule {
         
         String value = "";
         if(operatorValues.is_field) {
+            ArrayList<KeyValue> kvListValue = new ArrayList<>();
             int fieldId = Integer.parseInt(operatorValues.value);
             SchemaTableField attributeSchemaTableField = ToolDatabase.getInstance().fetchSchemaTableField(fieldId);
-            SchemaTable attributeSchemaTable = ToolDatabase.getInstance().fetchSchemaTable(attributeSchemaTableField.table_id);
-            ArrayList<KeyValue> kvListValue = new ArrayList<>();
-            kvListValue.add(new KeyValue("fieldName",attributeSchemaTableField.name));
-            kvListValue.add(new KeyValue("tableName",attributeSchemaTable.name));
-            kvListValue.add(new KeyValue("primairyKey",operatorValues.primairykey));
-            kvListValue.add(new KeyValue("foreignKey",operatorValues.foreignkey));
-            value = Context.getInstance().getTemplate("trigger_attribute_compare_inter", kvListValue);
+            if(attributeSchemaTableField.table_id == schemaTableField.table_id) {
+                kvListValue.add(new KeyValue("fieldName",attributeSchemaTableField.name));
+                value = Context.getInstance().getTemplate("trigger_attribute_compare_tuple", kvListValue);
+            }else{
+                SchemaTable attributeSchemaTable = ToolDatabase.getInstance().fetchSchemaTable(attributeSchemaTableField.table_id);
+                kvListValue.add(new KeyValue("tableName",attributeSchemaTable.name));
+                kvListValue.add(new KeyValue("primairyKey",operatorValues.primairykey));
+                kvListValue.add(new KeyValue("foreignKey",operatorValues.foreignkey));
+                value = Context.getInstance().getTemplate("trigger_attribute_compare_inter", kvListValue);
+            }
         }else{
             value = operatorValues.value;
         }
