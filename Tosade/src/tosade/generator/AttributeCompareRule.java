@@ -52,11 +52,26 @@ public class AttributeCompareRule implements IBusinessRule {
             triggerOperator = triggerOperator + "'DEL'";
         }
         
+        String value = "";
+        if(operatorValues.is_field) {
+            int fieldId = Integer.parseInt(operatorValues.value);
+            SchemaTableField attributeSchemaTableField = ToolDatabase.getInstance().fetchSchemaTableField(fieldId);
+            SchemaTable attributeSchemaTable = ToolDatabase.getInstance().fetchSchemaTable(attributeSchemaTableField.table_id);
+            ArrayList<KeyValue> kvListValue = new ArrayList<>();
+            kvListValue.add(new KeyValue("fieldName",attributeSchemaTableField.name));
+            kvListValue.add(new KeyValue("tableName",attributeSchemaTable.name));
+            kvListValue.add(new KeyValue("primairyKey",operatorValues.primairykey));
+            kvListValue.add(new KeyValue("foreignKey",operatorValues.foreignkey));
+            value = Context.getInstance().getTemplate("trigger_attribute_compare_inter", kvListValue);
+        }else{
+            value = operatorValues.value;
+        }
+        
         ArrayList<KeyValue> kvList = new ArrayList<>();
         kvList.add(new KeyValue("triggerOperator",triggerOperator));
         kvList.add(new KeyValue("fieldName",schemaTableField.name));
         kvList.add(new KeyValue("operator",useOperators.type));
-        kvList.add(new KeyValue("operatorValue",operatorValues.value + ""));
+        kvList.add(new KeyValue("operatorValue",value));
         kvList.add(new KeyValue("errorMessage",businessRule.error_message));
         String rule = Context.getInstance().getTemplate("trigger_attribute_compare", kvList);
         return rule;

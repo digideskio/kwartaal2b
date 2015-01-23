@@ -1,0 +1,1 @@
+(select {{fieldName}} FROM {{tableName}} WHERE {{primairyKey}} = :new.{{foreignKey}})
