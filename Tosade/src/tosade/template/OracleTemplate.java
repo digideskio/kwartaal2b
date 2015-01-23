@@ -23,8 +23,10 @@ public class OracleTemplate implements ITemplate {
             String line = br.readLine();
 
             while (line != null) {
+                if(!sb.toString().equals("")) {
+                    sb.append(System.lineSeparator());
+                }
                 sb.append(line);
-                sb.append(System.lineSeparator());
                 line = br.readLine();
             }
             template = sb.toString();
