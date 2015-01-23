@@ -19,7 +19,7 @@ import tosade.template.KeyValue;
  *
  * @author Rory
  */
-public class AttributeOtherRule {
+public class AttributeOtherRule implements IBusinessRule {
     public String getTrigger(SchemaTableField schemaTableField, BusinessRule businessRule, BusinessRuleType businessRuleType) {
         ArrayList<Operator> operators = ToolDatabase.getInstance().fetchOperators(businessRuleType.id);
         
