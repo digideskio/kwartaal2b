@@ -53,13 +53,18 @@ public class AttributeCompareRule implements IBusinessRule {
         
         String value;
         if(operatorValues.is_field) {
+            //value is een referentie naar een ander veld
             ArrayList<KeyValue> kvListValue = new ArrayList<>();
             int fieldId = Integer.parseInt(operatorValues.value);
             SchemaTableField attributeSchemaTableField = ToolDatabase.getInstance().fetchSchemaTableField(fieldId);
             if(attributeSchemaTableField.table_id == schemaTableField.table_id) {
+                //het andere veld zit in de zelfde tabel
+                //tuple compare rule
                 kvListValue.add(new KeyValue("fieldName",attributeSchemaTableField.name));
                 value = Context.getInstance().getTemplate("trigger_attribute_compare_tuple", kvListValue);
             }else{
+                //het andere veld zit in een andere tabel
+                //inter-entity compare rule
                 SchemaTable attributeSchemaTable = ToolDatabase.getInstance().fetchSchemaTable(attributeSchemaTableField.table_id);
                 kvListValue.add(new KeyValue("tableName",attributeSchemaTable.name));
                 kvListValue.add(new KeyValue("primairyKey",operatorValues.primairykey));
@@ -67,6 +72,7 @@ public class AttributeCompareRule implements IBusinessRule {
                 value = Context.getInstance().getTemplate("trigger_attribute_compare_inter", kvListValue);
             }
         }else{
+            //standaard attribute rule
             value = operatorValues.value;
         }
         
