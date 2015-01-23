@@ -48,11 +48,10 @@ public class AttributeCompareRule implements IBusinessRule {
             if(triggerUsed) {
                 triggerOperator = triggerOperator + ",";
             }
-            triggerUsed = true;
             triggerOperator = triggerOperator + "'DEL'";
         }
         
-        String value = "";
+        String value;
         if(operatorValues.is_field) {
             ArrayList<KeyValue> kvListValue = new ArrayList<>();
             int fieldId = Integer.parseInt(operatorValues.value);

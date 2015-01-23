@@ -115,6 +115,18 @@ public class ToolDatabase {
         }
     }
     
+    public void deleteTaskScripts(int taskId) {
+        try {
+            PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM operatorvalue where task_id = ?");
+            preparedStatement.setInt(1, taskId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.close();
+        } catch (SQLException e) {
+            System.out.println("Query Failed! Check output console");
+            e.printStackTrace();
+        }
+    }
+    
     public int insertTaskScript(TaskScript taskScript) {
         try {
             PreparedStatement preparedStatement = connect.prepareStatement("insert into taskscript (task_id, content, is_done, feedback) values (?, ?, ?, ?)");

@@ -14,6 +14,7 @@ import tosade.domain.*;
  */
 public class Generate {
     public Generate(Task task) {
+        ToolDatabase.getInstance().deleteTaskScripts(task.id);
         TargetSchema targetSchema = ToolDatabase.getInstance().fetchSchema(task.schema_id);
         Trigger trigger = new Trigger();
         ArrayList<SchemaTable> schemaTables = ToolDatabase.getInstance().fetchSchemaTables(targetSchema.id);
