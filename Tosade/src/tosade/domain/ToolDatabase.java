@@ -117,7 +117,7 @@ public class ToolDatabase {
     
     public void deleteTaskScripts(int taskId) {
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM operatorvalue where task_id = ?");
+            PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM taskscript where task_id = ?");
             preparedStatement.setInt(1, taskId);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.close();
