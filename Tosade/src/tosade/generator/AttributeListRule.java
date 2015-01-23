@@ -18,7 +18,7 @@ public class AttributeListRule implements IBusinessRule {
      public String getTrigger(SchemaTableField schemaTableField, BusinessRule businessRule, BusinessRuleType businessRuleType) {
         ArrayList<Operator> operators = ToolDatabase.getInstance().fetchOperators(businessRuleType.id);
         
-        if(operators.size()>1)
+        if(operators.size()>2)
             return "";
         
         OperatorValue operatorValues = null;
