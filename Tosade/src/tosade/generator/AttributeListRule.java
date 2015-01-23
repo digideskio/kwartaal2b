@@ -59,7 +59,7 @@ public class AttributeListRule implements IBusinessRule {
         kvList.add(new KeyValue("triggerOperator",triggerOperator));
         kvList.add(new KeyValue("fieldName",schemaTableField.name));
         kvList.add(new KeyValue("operator",useOperators.type));
-        kvList.add(new KeyValue("operatorValue",operatorValues + ""));
+        kvList.add(new KeyValue("operatorValue",operatorValues.value));
         kvList.add(new KeyValue("errorMessage",businessRule.error_message));
         String rule = Context.getInstance().getTemplate("trigger_attribute_list", kvList);
         return rule;
