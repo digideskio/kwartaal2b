@@ -52,6 +52,7 @@ public class AttributeCompareRule implements IBusinessRule {
         }
         
         String value;
+        ArrayList<KeyValue> kvList = new ArrayList<>();
         if(operatorValues.is_field) {
             //value is een referentie naar een ander veld
             ArrayList<KeyValue> kvListValue = new ArrayList<>();
@@ -61,6 +62,8 @@ public class AttributeCompareRule implements IBusinessRule {
             if(attributeSchemaTableField.table_id == schemaTableField.table_id) {
                 //het andere veld zit in de zelfde tabel
                 //tuple compare rule
+                kvList.add(new KeyValue("interEntityOne",""));
+                kvList.add(new KeyValue("interEntityTwo",""));
                 value = Context.getInstance().getTemplate("trigger_attribute_compare_tuple", kvListValue);
             }else{
                 //het andere veld zit in een andere tabel
@@ -69,14 +72,17 @@ public class AttributeCompareRule implements IBusinessRule {
                 kvListValue.add(new KeyValue("tableName",attributeSchemaTable.name));
                 kvListValue.add(new KeyValue("primairyKey",operatorValues.primairykey));
                 kvListValue.add(new KeyValue("foreignKey",operatorValues.foreignkey));
+                kvList.add(new KeyValue("interEntityOne",Context.getInstance().getTemplate("trigger_attribute_compare_inter_one", kvListValue)));
+                kvList.add(new KeyValue("interEntityTwo",Context.getInstance().getTemplate("trigger_attribute_compare_inter_two", kvListValue)));
                 value = Context.getInstance().getTemplate("trigger_attribute_compare_inter", kvListValue);
             }
         }else{
             //standaard attribute rule
+            kvList.add(new KeyValue("interEntityOne",""));
+            kvList.add(new KeyValue("interEntityTwo",""));
             value = operatorValues.value;
         }
         
-        ArrayList<KeyValue> kvList = new ArrayList<>();
         kvList.add(new KeyValue("triggerOperator",triggerOperator));
         kvList.add(new KeyValue("fieldName",schemaTableField.name));
         kvList.add(new KeyValue("operator",useOperators.type));

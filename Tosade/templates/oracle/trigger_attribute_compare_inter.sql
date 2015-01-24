@@ -1,1 +1,1 @@
-(select {{fieldName}} FROM {{tableName}} WHERE {{primairyKey}} = :new.{{foreignKey}})
+l_returnvalue
