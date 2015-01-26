@@ -31,7 +31,7 @@ public class ToolDatabase {
             return;
         }
         try {
-            connect = DriverManager.getConnection("jdbc:oracle:thin:@yuno.jelleluteijn.nl:1521:xe", "kwartaal2b","kwartaal2b");
+            connect = DriverManager.getConnection("jdbc:oracle:thin:@tosade.123apps.net:1521:xe", "kwartaal2b","kwartaal2b");
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
