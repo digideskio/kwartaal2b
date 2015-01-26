@@ -24,8 +24,8 @@ public class Generate {
             taskScript.task_id = task.id;
             taskScript.content = code;
             if(code != "") {
-                System.out.println(code);
-                System.out.println("");
+                //System.out.println(code);
+                //System.out.println("");
                 ToolDatabase.getInstance().insertTaskScript(taskScript);
             }
         }
