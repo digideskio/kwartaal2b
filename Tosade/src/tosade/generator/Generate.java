@@ -29,7 +29,7 @@ public class Generate {
                 ToolDatabase.getInstance().insertTaskScript(taskScript);
             }
         }
-        //task.status = "done";
+        task.status = "done";
         ToolDatabase.getInstance().updateTask(task);
     }
 }
